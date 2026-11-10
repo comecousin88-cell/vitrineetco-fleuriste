@@ -1,0 +1,129 @@
+.section {
+  padding: clamp(4.5rem, 11vh, 8rem) var(--gutter) clamp(5rem, 12vh, 9rem);
+  background: var(--papier);
+}
+
+.title {
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+  max-width: 14ch;
+}
+
+/* En quinconce sur 12 colonnes : deux grands tirages, deux plus petits, décalés en hauteur. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.4vw, 2.25rem);
+  row-gap: clamp(3rem, 8vh, 5.5rem);
+  margin-top: clamp(2.5rem, 7vh, 4.5rem);
+  list-style: none;
+}
+
+.bouquets {
+  grid-column: 1 / span 7;
+}
+
+.deuil {
+  grid-column: 9 / span 4;
+  align-self: end;
+}
+
+.mariages {
+  grid-column: 2 / span 4;
+}
+
+.ateliers {
+  grid-column: 7 / span 6;
+  margin-top: clamp(4rem, 14vh, 9rem);
+}
+
+.link {
+  display: block;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+.photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+/* Les deux grands tirages sont en largeur : en 4:5, ils dépasseraient la hauteur de l'écran. */
+.bouquets .photo,
+.ateliers .photo {
+  aspect-ratio: 5 / 4;
+}
+
+/* La couche de la photo dépasse un peu du cadre, pour que la parallaxe ne découvre jamais de bord. */
+.layer {
+  inset: -6% 0;
+}
+
+.layer > * {
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link:hover .layer > * {
+  transform: scale(1.03);
+}
+
+.text {
+  display: grid;
+  grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.375rem 1.5rem;
+  margin-top: 1.125rem;
+}
+
+.name {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  line-height: 1.1;
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.35s;
+}
+
+.link:hover .name {
+  background-size: 100% 1px;
+}
+
+.phrase {
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+/* Les petits tirages : le texte passe sous le titre. */
+.deuil .text,
+.mariages .text {
+  grid-template-columns: 1fr;
+}
+
+@media (max-width: 1023px) {
+  .text {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 759px) {
+  .grid {
+    grid-template-columns: 1fr;
+    row-gap: 2.5rem;
+  }
+
+  .bouquets,
+  .deuil,
+  .mariages,
+  .ateliers {
+    grid-column: auto;
+    margin-top: 0;
+  }
+
+  /* Sur téléphone, des tirages un peu moins hauts : quatre photos en 4:5 feraient défiler longtemps. */
+  .photo {
+    aspect-ratio: 5 / 4;
+  }
+
+  .text {
+    margin-top: 0.875rem;
+  }
+}

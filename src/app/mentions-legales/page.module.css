@@ -1,0 +1,28 @@
+.legal {
+  max-width: 44rem;
+  padding: calc(var(--top-h) + clamp(2.5rem, 8vh, 5rem)) var(--gutter) clamp(4rem, 10vh, 6rem);
+}
+
+.title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  margin-bottom: 2rem;
+}
+
+.legal h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.375rem;
+}
+
+.legal p + p {
+  margin-top: 0.75rem;
+}
+
+.legal p {
+  color: var(--tige-doux);
+}
+
+.legal a {
+  color: var(--tige);
+  text-underline-offset: 3px;
+}

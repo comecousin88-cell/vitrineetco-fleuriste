@@ -1,0 +1,25 @@
+# dépendances
+/node_modules
+
+# next.js
+/.next/
+/out/
+/build
+
+# les originaux lourds : ils ne partent ni sur GitHub ni en ligne
+/source/
+
+# divers
+.DS_Store
+*.pem
+npm-debug.log*
+
+# variables d'environnement
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

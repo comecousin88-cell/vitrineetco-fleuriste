@@ -1,0 +1,305 @@
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: 2.5rem clamp(2rem, 5vw, 5rem);
+  padding: calc(var(--top-h) + clamp(2.5rem, 8vh, 5rem)) var(--gutter) clamp(3.5rem, 9vh, 6rem);
+}
+
+.title {
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+}
+
+.lead {
+  max-width: 36ch;
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  color: var(--tige-doux);
+}
+
+/* Trois faits, alignés comme une fiche. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 0 2rem;
+  margin-top: 2rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--filet);
+}
+
+.facts dt {
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+}
+
+.facts dd {
+  margin-top: 0.125rem;
+  font-weight: 600;
+}
+
+.introPhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+}
+
+.h2 {
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+}
+
+/* ---------- Prochaines dates : une liste alignée comme un tableau ---------- */
+
+.dates {
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter);
+  background: var(--papier);
+}
+
+.sessions {
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  list-style: none;
+}
+
+.session {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr) 5rem 11rem 8.5rem;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.125rem 0;
+  border-top: 1px solid var(--filet);
+}
+
+.session:last-child {
+  border-bottom: 1px solid var(--filet);
+}
+
+.date {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.theme {
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+.time {
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+  font-variant-numeric: tabular-nums;
+}
+
+.price {
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.places {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+/* Une pastille par place : pleine si elle est libre. */
+.dots {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.dot,
+.dotFree {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.dot {
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.3);
+}
+
+.dotFree {
+  background: var(--sauge);
+}
+
+.placesText {
+  font-size: 0.875rem;
+}
+
+.reserve {
+  min-height: 2.75rem;
+  border-radius: 999px;
+  background: var(--terracotta);
+  color: var(--papier);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: background-color 0.2s;
+}
+
+.reserve:hover:not(:disabled) {
+  background: var(--terracotta-fonce);
+}
+
+.reserve:disabled {
+  background: transparent;
+  color: var(--tige-doux);
+  box-shadow: inset 0 0 0 1px var(--filet);
+  cursor: not-allowed;
+}
+
+.full .date,
+.full .what,
+.full .price {
+  color: var(--tige-doux);
+}
+
+.private {
+  margin-top: 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+.phone {
+  font-weight: 600;
+  color: var(--tige);
+  white-space: nowrap;
+}
+
+/* ---------- Thèmes ---------- */
+
+.themes {
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter);
+}
+
+.themeGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.5rem clamp(1rem, 2.4vw, 2rem);
+  margin-top: clamp(1.5rem, 4vh, 2.5rem);
+  list-style: none;
+}
+
+.themePhoto {
+  border-radius: 6px;
+}
+
+.themeHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.themeName {
+  font-size: 1.25rem;
+  line-height: 1.15;
+}
+
+.themePrice {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.themeText {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+@media (max-width: 1023px) {
+  .themeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .session {
+    grid-template-columns: 7.5rem minmax(0, 1fr) 4.5rem 8.5rem;
+  }
+
+  .places {
+    grid-column: 2 / 4;
+    grid-row: 2;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .reserve {
+    grid-column: 4;
+    grid-row: 1 / 3;
+  }
+}
+
+@media (max-width: 759px) {
+  .intro {
+    grid-template-columns: 1fr;
+    padding-top: calc(var(--top-h) + 2rem);
+  }
+
+  .introPhoto {
+    order: -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  .lead {
+    font-size: 1.0625rem;
+  }
+
+  .facts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 1rem;
+  }
+
+  .facts dd {
+    font-size: 0.9375rem;
+  }
+
+  /* Sur téléphone : la date et le prix en haut, le thème, les places et le bouton dessous. */
+  .session {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.5rem 1rem;
+  }
+
+  .date {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .price {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .what {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .places {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .reserve {
+    grid-column: 2;
+    grid-row: 3;
+    padding: 0 1.25rem;
+  }
+
+  .themeGrid {
+    gap: 2rem 0.75rem;
+  }
+
+  .themeHead {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .themeName {
+    font-size: 1.125rem;
+  }
+
+  .themeText {
+    font-size: 0.875rem;
+  }
+}

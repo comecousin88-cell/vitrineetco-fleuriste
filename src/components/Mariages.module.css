@@ -1,0 +1,99 @@
+.intro {
+  padding: calc(var(--top-h) + clamp(2.5rem, 8vh, 5rem)) var(--gutter) 0;
+}
+
+/* Le titre à gauche, la phrase en bas à droite : la même mise en page que la sélection de l'accueil. */
+.introHead {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  align-items: end;
+  gap: 1.5rem 3rem;
+  margin-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.title {
+  font-size: clamp(2.75rem, 6vw, 5.75rem);
+  max-width: 11ch;
+}
+
+.lead {
+  max-width: 34ch;
+  justify-self: end;
+  color: var(--tige-doux);
+}
+
+.opening {
+  aspect-ratio: 16 / 7;
+  border-radius: 6px;
+}
+
+.openingLayer {
+  inset: -5% 0;
+}
+
+.h2 {
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+}
+
+.h2:focus {
+  outline: none;
+}
+
+/* ---------- Prestations : un tableau de prix aligné ---------- */
+
+.prestations {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: 2rem clamp(2rem, 5vw, 5rem);
+  align-items: start;
+  padding: clamp(4rem, 10vh, 6.5rem) var(--gutter) clamp(3rem, 8vh, 5rem);
+}
+
+.prices div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1.5rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--filet);
+}
+
+.prices div:last-child {
+  border-bottom: 1px solid var(--filet);
+}
+
+.prices dt {
+  font-size: 1.0625rem;
+}
+
+.prices dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* ---------- Galerie ---------- */
+
+.gallery {
+  padding: clamp(3rem, 8vh, 5rem) var(--gutter);
+  background: var(--papier);
+}
+
+@media (max-width: 759px) {
+  .introHead,
+  .prestations {
+    grid-template-columns: 1fr;
+  }
+
+  .lead {
+    justify-self: start;
+  }
+
+  .opening {
+    aspect-ratio: 4 / 3;
+  }
+
+  .prices dt {
+    font-size: 1rem;
+  }
+}

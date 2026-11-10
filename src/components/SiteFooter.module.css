@@ -1,0 +1,70 @@
+.footer {
+  padding: clamp(3rem, 8vh, 4.5rem) var(--gutter) 2rem;
+  background: var(--tige);
+  color: var(--chaux);
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 2rem 4rem;
+}
+
+.name {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1.1;
+}
+
+.line {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  color: rgba(243, 244, 238, 0.78);
+}
+
+.links {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 0.5rem 3rem;
+  list-style: none;
+  font-size: 0.9375rem;
+}
+
+.bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+  margin-top: clamp(2.5rem, 6vh, 3.5rem);
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(243, 244, 238, 0.18);
+  font-size: 0.8125rem;
+  color: rgba(243, 244, 238, 0.72);
+}
+
+.legal {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer :focus-visible {
+  outline-color: var(--chaux);
+}
+
+@media (max-width: 759px) {
+  .links {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.625rem 1.5rem;
+  }
+}

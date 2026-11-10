@@ -1,0 +1,343 @@
+/* Le hero. Sans animation (ou sans JavaScript), c'est l'état final : le bouquet fini, plein cadre, et toutes
+   les infos. Avec animation (html[data-anim]), il démarre en fenêtre et le scroll l'agrandit. */
+
+.hero {
+  position: relative;
+}
+
+.stage {
+  position: relative;
+  height: 100svh;
+  min-height: 36rem;
+  overflow: hidden;
+}
+
+.media {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--sauge-pale);
+}
+
+.shift {
+  position: absolute;
+  inset: 0;
+}
+
+.canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+/* Le canvas est noir tant qu'aucune image n'est arrivée : on attend la première. */
+.canvas[data-painted] {
+  opacity: 1;
+}
+
+/* Le voile de lumière : le texte reste lisible quand la vidéo passe dessous. */
+.veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--chaux-rgb), 0.94) 0%,
+    rgba(var(--chaux-rgb), 0.82) 30%,
+    rgba(var(--chaux-rgb), 0) 58%
+  );
+}
+
+/* L'emplacement provisoire, en attendant la vidéo. Rien n'y est dessiné : un aplat, le nom du fichier
+   attendu, et une jauge qui suit la composition au scroll. */
+.placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 2rem;
+  background: #e2e7de;
+  color: var(--tige-doux);
+  text-align: center;
+}
+
+.placeholderFile {
+  font-weight: 600;
+  font-size: 0.9375rem;
+  color: var(--tige);
+}
+
+.placeholderText {
+  max-width: 22rem;
+  font-size: 0.875rem;
+}
+
+.placeholderBar {
+  width: min(16rem, 60%);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(var(--sauge), var(--sauge)) 0 0 / calc(var(--p, 1) * 100%) 100% no-repeat, rgba(36, 56, 44, 0.1);
+}
+
+/* Le texte, dans la colonne de gauche sur ordinateur. */
+.upper,
+.lower {
+  position: absolute;
+  left: var(--gutter);
+  width: min(40rem, 44vw);
+  z-index: 2;
+}
+
+.upper {
+  top: calc(var(--top-h) + clamp(2rem, 9vh, 6rem));
+}
+
+.lower {
+  bottom: clamp(2rem, 8vh, 4.5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.title {
+  font-size: clamp(3.5rem, 7.4vw, 7.25rem);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  max-width: 8ch;
+}
+
+.lead {
+  max-width: 30ch;
+  margin-top: 1.5rem;
+  font-size: clamp(1.0625rem, 1.35vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.where {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.875rem;
+  margin-top: 1.5rem;
+}
+
+.address {
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+.delivery {
+  font-weight: 500;
+  font-size: 1rem;
+  max-width: 32ch;
+}
+
+/* Le bouquet fini, à droite, sur la vidéo. */
+.finale {
+  position: absolute;
+  right: var(--gutter);
+  bottom: clamp(2rem, 8vh, 4.5rem);
+  z-index: 2;
+  width: 19rem;
+  padding: 1.25rem 1.25rem 1.25rem;
+  border-radius: 10px;
+  background: rgba(251, 251, 248, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 18px 40px -24px rgba(36, 56, 44, 0.45);
+}
+
+.finaleName {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.finaleText {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+.prices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 1rem 0 1.125rem;
+  border-top: 1px solid var(--filet);
+  border-bottom: 1px solid var(--filet);
+}
+
+.prices div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  padding: 0.625rem 0;
+}
+
+.prices div + div {
+  padding-left: 0.875rem;
+  border-left: 1px solid var(--filet);
+}
+
+.prices dt {
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+}
+
+.prices dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.finaleCta {
+  width: 100%;
+}
+
+/* ---------- Animé, sur ordinateur : l'état de départ, avant que GSAP prenne la main. ---------- */
+
+:global(html[data-anim]) .media {
+  clip-path: inset(calc(var(--top-h) + 5vh) var(--gutter) 7vh 52% round 8px);
+}
+
+:global(html[data-anim]) .shift {
+  transform: translateX(calc(24vw - var(--gutter) / 2));
+}
+
+:global(html[data-anim]) .veil,
+:global(html[data-anim]) .finale {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* ---------- Téléphone ---------- */
+
+@media (max-width: 759px) {
+  .veil {
+    background: linear-gradient(
+      180deg,
+      rgba(var(--chaux-rgb), 0.92) 0%,
+      rgba(var(--chaux-rgb), 0.78) 34%,
+      rgba(var(--chaux-rgb), 0) 52%,
+      rgba(var(--chaux-rgb), 0) 62%,
+      rgba(var(--chaux-rgb), 0.9) 86%
+    );
+  }
+
+  .title {
+    font-size: clamp(2.375rem, 11vw, 3.25rem);
+    max-width: none;
+  }
+
+  .lead {
+    margin-top: 0.75rem;
+    font-size: 1rem;
+    line-height: 1.45;
+  }
+
+  .where {
+    margin-top: 0.75rem;
+  }
+
+  /* Sur téléphone, l'adresse est à un pouce, dans « Itinéraire » : on laisse la place à la vidéo. */
+  .address {
+    display: none;
+  }
+
+  .lower {
+    gap: 0.875rem;
+  }
+
+  .delivery {
+    font-size: 0.9375rem;
+  }
+
+  .order {
+    width: 100%;
+  }
+
+  .finale {
+    width: auto;
+    padding: 1rem;
+  }
+
+  /* Le bouquet doit rester visible au-dessus de la carte : on garde le nom, les prix et le bouton. */
+  .finaleText {
+    display: none;
+  }
+
+  .prices {
+    margin: 0.75rem 0 0.875rem;
+  }
+
+  /* Sans animation : tout se suit simplement, le bouquet fini entre le texte et les boutons. */
+  :global(html:not([data-anim])) .stage {
+    height: auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: calc(var(--top-h) + 1.5rem) var(--gutter) 2rem;
+  }
+
+  :global(html:not([data-anim])) .media {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    border-radius: 8px;
+    order: 1;
+  }
+
+  :global(html:not([data-anim])) .veil {
+    display: none;
+  }
+
+  :global(html:not([data-anim])) .upper,
+  :global(html:not([data-anim])) .lower,
+  :global(html:not([data-anim])) .finale {
+    position: static;
+    width: auto;
+  }
+
+  :global(html:not([data-anim])) .lower {
+    order: 2;
+  }
+
+  :global(html:not([data-anim])) .finale {
+    order: 3;
+  }
+
+  /* Animé : le texte en haut, le bouton en bas, la fenêtre entre les deux. */
+  :global(html[data-anim]) .upper,
+  :global(html[data-anim]) .lower {
+    left: var(--gutter);
+    right: var(--gutter);
+    width: auto;
+  }
+
+  :global(html[data-anim]) .upper {
+    top: calc(var(--top-h) + 1.25rem);
+  }
+
+  :global(html[data-anim]) .lower,
+  :global(html[data-anim]) .finale {
+    bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px) + 1rem);
+  }
+
+  :global(html[data-anim]) .finale {
+    left: var(--gutter);
+    right: var(--gutter);
+  }
+
+  :global(html[data-anim]) .media {
+    clip-path: inset(44% var(--gutter) 28% var(--gutter) round 8px);
+  }
+
+  :global(html[data-anim]) .shift {
+    transform: none;
+  }
+}

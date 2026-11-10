@@ -1,0 +1,142 @@
+.section {
+  padding: clamp(4.5rem, 11vh, 8rem) var(--gutter) clamp(4rem, 10vh, 7rem);
+}
+
+/* Le portrait à gauche, grand ; le texte et les producteurs à droite, calés en bas. */
+.top {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.4vw, 2.25rem);
+  align-items: end;
+}
+
+.portrait {
+  grid-column: 1 / span 5;
+}
+
+.portraitPhoto {
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+.layer {
+  inset: -6% 0;
+}
+
+.text {
+  grid-column: 7 / span 6;
+}
+
+.title {
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+}
+
+.lead {
+  max-width: 38ch;
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  color: var(--tige-doux);
+}
+
+.producers {
+  margin-top: clamp(2rem, 5vh, 3rem);
+  list-style: none;
+}
+
+/* Une ligne par producteur : photo carrée, prénom et fleurs, distance alignée à droite. */
+.producer {
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0.875rem 0;
+  border-top: 1px solid var(--filet);
+}
+
+.producer:last-child {
+  border-bottom: 1px solid var(--filet);
+}
+
+.producerPhoto {
+  border-radius: 6px;
+}
+
+.producerName {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+.producerFlowers {
+  margin-top: 0.125rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+.distance {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.shop {
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+}
+
+.shopPhoto {
+  aspect-ratio: 16 / 7;
+  border-radius: 6px;
+}
+
+.caption {
+  margin-top: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+@media (max-width: 1023px) {
+  .portrait {
+    grid-column: 1 / span 5;
+  }
+
+  .text {
+    grid-column: 6 / -1;
+  }
+}
+
+@media (max-width: 759px) {
+  .top {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+
+  .portrait,
+  .text {
+    grid-column: auto;
+  }
+
+  .portraitPhoto {
+    aspect-ratio: 4 / 4.5;
+  }
+
+  .lead {
+    font-size: 1.0625rem;
+  }
+
+  .producer {
+    grid-template-columns: 3.75rem minmax(0, 1fr) auto;
+    gap: 0.875rem;
+  }
+
+  .producerName {
+    font-size: 1.0625rem;
+  }
+
+  .producerFlowers {
+    font-size: 0.875rem;
+  }
+
+  .shopPhoto {
+    aspect-ratio: 4 / 3;
+  }
+}

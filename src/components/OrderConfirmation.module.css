@@ -1,0 +1,83 @@
+.box {
+  max-width: 40rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: 12px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+
+.title {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.text {
+  margin-top: 0.75rem;
+  font-size: 1.0625rem;
+}
+
+.lines {
+  margin-top: 1.75rem;
+}
+
+.lines div {
+  display: grid;
+  grid-template-columns: 7rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--filet);
+  font-size: 0.9375rem;
+}
+
+.lines dt {
+  color: var(--tige-doux);
+}
+
+.reference {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.card {
+  font-style: italic;
+  white-space: pre-line;
+}
+
+.totalLine dd {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+}
+
+.phone {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.restart {
+  margin-top: 1.5rem;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.3);
+  font-weight: 600;
+}
+
+.restart:hover {
+  box-shadow: inset 0 0 0 1px var(--tige);
+}
+
+@media (max-width: 759px) {
+  .lines div {
+    grid-template-columns: 1fr;
+    gap: 0.125rem;
+  }
+}

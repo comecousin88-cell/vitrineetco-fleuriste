@@ -1,0 +1,111 @@
+.section {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.4vw, 2.25rem);
+  align-items: center;
+  padding: clamp(4.5rem, 11vh, 8rem) var(--gutter);
+  background: var(--papier);
+}
+
+.photo {
+  grid-column: 1 / span 6;
+  aspect-ratio: 3 / 2;
+  border-radius: 6px;
+}
+
+.content {
+  grid-column: 8 / span 5;
+}
+
+.title {
+  font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+}
+
+.address {
+  margin-top: 1.25rem;
+  font-style: normal;
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.badge {
+  margin-top: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* Les horaires : un vrai tableau, les heures alignées. */
+.hours {
+  width: 100%;
+  max-width: 26rem;
+  margin-top: 2rem;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.hours th,
+.hours td {
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--filet);
+  font-weight: 400;
+  text-align: left;
+}
+
+.hours td {
+  text-align: right;
+}
+
+.hours tr:last-child th,
+.hours tr:last-child td {
+  border-bottom: 1px solid var(--filet);
+}
+
+.today th,
+.today td {
+  font-weight: 600;
+}
+
+.todayLabel {
+  margin-left: 0.5rem;
+  font-size: 0.8125rem;
+  font-weight: 400;
+  color: var(--tige-doux);
+}
+
+.note {
+  margin-top: 1.25rem;
+  max-width: 34ch;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+}
+
+@media (max-width: 1023px) {
+  .photo {
+    grid-column: 1 / span 5;
+  }
+
+  .content {
+    grid-column: 7 / -1;
+  }
+}
+
+@media (max-width: 759px) {
+  .section {
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+  }
+
+  .photo,
+  .content {
+    grid-column: auto;
+  }
+
+  .hours {
+    max-width: none;
+  }
+}

@@ -1,0 +1,264 @@
+/* La page Deuil : mêmes couleurs que le site, sans rose ni terracotta, et beaucoup d'air. */
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  align-items: center;
+  gap: 2.5rem clamp(2rem, 5vw, 5rem);
+  padding: calc(var(--top-h) + clamp(2.5rem, 8vh, 5rem)) var(--gutter) clamp(3.5rem, 9vh, 6rem);
+}
+
+.title {
+  font-size: clamp(2.75rem, 5.5vw, 5rem);
+}
+
+.lead {
+  max-width: 36ch;
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  color: var(--tige-doux);
+}
+
+/* Le téléphone, la première chose à faire quand on ne sait pas par où commencer. */
+.phoneBox {
+  margin-top: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: 10px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px var(--filet);
+  max-width: 24rem;
+}
+
+.phoneLabel {
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+}
+
+.phone {
+  display: inline-block;
+  margin-top: 0.25rem;
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: clamp(1.875rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  text-decoration: none;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.phone:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+}
+
+.phoneHours {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+}
+
+.introPhoto {
+  aspect-ratio: 16 / 10;
+  border-radius: 6px;
+}
+
+/* ---------- Compositions ---------- */
+
+.compositions {
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter);
+  background: var(--papier);
+}
+
+.h2 {
+  font-size: clamp(2rem, 3.6vw, 3.25rem);
+}
+
+.h2:focus {
+  outline: none;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2.5rem, 6vh, 3.5rem) clamp(1rem, 2.4vw, 2.25rem);
+  margin-top: clamp(2rem, 5vh, 3rem);
+  list-style: none;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardPhoto {
+  border-radius: 6px;
+}
+
+.cardHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.cardName {
+  font-size: 1.375rem;
+}
+
+.cardPrice {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.cardText {
+  margin-top: 0.375rem;
+  font-size: 0.9375rem;
+  color: var(--tige-doux);
+  flex: 1;
+}
+
+.choose {
+  align-self: flex-start;
+  margin-top: 0.875rem;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.3);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  transition: box-shadow 0.2s, background-color 0.2s;
+}
+
+.choose:hover {
+  box-shadow: inset 0 0 0 1px var(--tige);
+  background: var(--sauge-pale);
+}
+
+/* La sixième case : le sur-mesure, au téléphone. */
+.custom {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem;
+  border-radius: 6px;
+  background: var(--chaux);
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+
+.customTitle {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+
+.custom .cardText {
+  flex: 0;
+  margin-top: 0.5rem;
+}
+
+.customPhone {
+  margin-top: 1rem;
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.625rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.customPhone:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* ---------- Commande ---------- */
+
+.order {
+  padding: clamp(3.5rem, 9vh, 6rem) var(--gutter) clamp(4rem, 10vh, 7rem);
+}
+
+.orderHead {
+  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.orderLead {
+  max-width: 52ch;
+  margin-top: 0.75rem;
+  color: var(--tige-doux);
+}
+
+.lieux {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.afterChoice {
+  margin-top: 1.25rem;
+}
+
+/* Sur cette page, le bouton de commande est vert tige, comme le reste. */
+.submit {
+  background: var(--tige);
+}
+
+.submit:hover {
+  background: #1a2a20;
+}
+
+.inlinePhone {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@media (max-width: 1023px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 759px) {
+  .intro {
+    grid-template-columns: 1fr;
+    padding-top: calc(var(--top-h) + 2rem);
+  }
+
+  .introPhoto {
+    order: -1;
+    aspect-ratio: 16 / 9;
+  }
+
+  .lead {
+    font-size: 1.0625rem;
+  }
+
+  .phoneBox {
+    max-width: none;
+  }
+
+  .grid {
+    gap: 2rem 0.75rem;
+  }
+
+  .cardHead {
+    flex-direction: column;
+    gap: 0.125rem;
+  }
+
+  .cardName {
+    font-size: 1.1875rem;
+  }
+
+  .cardText {
+    font-size: 0.875rem;
+  }
+
+  .custom {
+    grid-column: 1 / -1;
+    padding: 1.5rem;
+  }
+
+  .lieux {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

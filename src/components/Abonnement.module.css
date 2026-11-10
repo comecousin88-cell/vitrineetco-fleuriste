@@ -1,0 +1,173 @@
+.section {
+  padding: clamp(4.5rem, 11vh, 8rem) var(--gutter) clamp(5rem, 12vh, 8rem);
+  background: var(--sauge-pale);
+}
+
+.head {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  align-items: end;
+  gap: 1.5rem 3rem;
+}
+
+.title {
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+  max-width: 14ch;
+}
+
+.title:focus {
+  outline: none;
+}
+
+.lead {
+  max-width: 34ch;
+  justify-self: end;
+  color: var(--tige-doux);
+}
+
+/* Le choix du public : un interrupteur à deux positions. */
+.audience {
+  display: inline-flex;
+  gap: 0.25rem;
+  margin: clamp(2rem, 5vh, 3rem) 0 clamp(1.5rem, 4vh, 2.5rem);
+  padding: 0.25rem;
+  border-radius: 999px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+
+.audienceOption {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1.25rem;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.audienceOption input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.audienceOption:has(input:checked) {
+  background: var(--tige);
+  color: var(--papier);
+}
+
+.audienceOption:has(input:focus-visible) {
+  outline: 2px solid var(--tige);
+  outline-offset: 2px;
+}
+
+/* Photo, formulaire, récapitulatif : trois colonnes sur grand écran. */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.4vw, 2.25rem);
+  align-items: start;
+}
+
+.photoCol {
+  grid-column: 1 / span 4;
+  position: sticky;
+  top: calc(var(--top-h) + 1.5rem);
+}
+
+.photo {
+  aspect-ratio: 4 / 5;
+  border-radius: 6px;
+}
+
+.steps {
+  grid-column: 5 / span 5;
+}
+
+.summary {
+  grid-column: 10 / span 3;
+}
+
+.formules {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.formuleTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.formulePrice {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.after {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1179px) {
+  .photoCol {
+    grid-column: 1 / span 4;
+  }
+
+  .steps {
+    grid-column: 5 / -1;
+  }
+
+  .summary {
+    grid-column: 5 / -1;
+    position: static;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 759px) {
+  .head {
+    grid-template-columns: 1fr;
+  }
+
+  .lead {
+    justify-self: start;
+  }
+
+  .audience {
+    display: flex;
+  }
+
+  .audienceOption {
+    flex: 1;
+    justify-content: center;
+    padding: 0 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .photoCol {
+    grid-column: 1 / -1;
+    position: static;
+    margin-bottom: 0.5rem;
+  }
+
+  .photo {
+    aspect-ratio: 16 / 10;
+  }
+
+  .steps,
+  .summary {
+    grid-column: 1 / -1;
+  }
+}

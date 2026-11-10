@@ -1,0 +1,98 @@
+/* Les couleurs du site, réunies ici pour pouvoir les changer en un seul endroit. Direction « Lumière du matin ». */
+:root {
+  --chaux: #f3f4ee; /* le fond : un blanc de chaux, à peine vert */
+  --chaux-rgb: 243, 244, 238;
+  --papier: #fbfbf8; /* les champs et les panneaux posés sur le fond */
+  --tige: #24382c; /* le texte, à la place du noir */
+  --tige-doux: #4d5f53; /* le texte secondaire, encore lisible en petit */
+  --sauge: #9bae95;
+  --sauge-pale: #dfe6da;
+  --rose: #edcfc8;
+  --terracotta: #ad5834; /* un seul usage : les boutons qui commandent */
+  --terracotta-fonce: #93472a;
+  --filet: rgba(36, 56, 44, 0.14);
+
+  --font-size: 1.0625rem; /* 17 px */
+
+  /* Le bandeau et la barre du haut : les sections s'en servent pour ne jamais passer dessous. */
+  --band-h: 1.5rem;
+  --header-h: 3.5rem;
+  --top-h: calc(var(--band-h) + var(--header-h));
+  /* La barre du bas, sur téléphone. */
+  --bar-h: 4.5rem;
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+}
+
+@media (max-width: 759px) {
+  :root {
+    --header-h: 3rem;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-padding-top: var(--top-h);
+}
+
+body {
+  background: var(--chaux);
+  color: var(--tige);
+  font-family: var(--font-texte), "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--font-size);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+@media (max-width: 759px) {
+  body {
+    /* La barre du bas ne cache jamais la fin de la page. */
+    padding-bottom: calc(var(--bar-h) + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-titre), Georgia, serif;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+:focus-visible {
+  outline: 2px solid var(--tige);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

@@ -1,0 +1,577 @@
+.section {
+  padding: clamp(4.5rem, 11vh, 8rem) var(--gutter) clamp(5rem, 12vh, 8rem);
+  background: var(--chaux);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 2rem;
+  margin-bottom: clamp(2rem, 5vh, 3rem);
+}
+
+.title {
+  font-size: clamp(2.25rem, 4.6vw, 4.25rem);
+}
+
+.title:focus {
+  outline: none;
+}
+
+.lead {
+  color: var(--tige-doux);
+}
+
+/* Le formulaire sur 7 colonnes, le récapitulatif collant sur 4. */
+.layout {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(1rem, 2.4vw, 2.25rem);
+  align-items: start;
+}
+
+.steps {
+  grid-column: 1 / span 7;
+}
+
+.summary {
+  grid-column: 9 / span 4;
+  position: sticky;
+  top: calc(var(--top-h) + 1.5rem);
+  padding: 1.5rem;
+  border-radius: 10px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+
+/* ---------- Étapes ---------- */
+
+.step {
+  border: 0;
+  min-width: 0;
+  padding: 1.75rem 0 2rem;
+  border-top: 1px solid var(--filet);
+}
+
+/* Flottante, la légende quitte la bordure du fieldset et se place dans l'étape, sous le filet. */
+.legend {
+  float: left;
+  width: 100%;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.375rem;
+  line-height: 1.2;
+}
+
+.legend + * {
+  clear: both;
+}
+
+/* Le numéro de l'étape : la commande se remplit dans cet ordre. */
+.number {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--sauge-pale);
+  font-family: var(--font-texte), sans-serif;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  min-width: 0;
+}
+
+.label {
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+}
+
+.optional {
+  margin-left: 0.25rem;
+  font-size: 0.8125rem;
+  color: rgba(77, 95, 83, 0.75);
+}
+
+.input {
+  width: 100%;
+  min-height: 3rem;
+  padding: 0 0.875rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+  color: var(--tige);
+  font: inherit;
+  font-size: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.input:hover {
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.4);
+}
+
+.input:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--tige);
+}
+
+.input[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 2px var(--terracotta);
+}
+
+select.input {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: linear-gradient(45deg, transparent 50%, var(--tige) 50%), linear-gradient(135deg, var(--tige) 50%, transparent 50%);
+  background-position: calc(100% - 1.2rem) 52%, calc(100% - 0.85rem) 52%;
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.textarea {
+  min-height: 7rem;
+  padding: 0.75rem 0.875rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.count {
+  margin-top: 0.375rem;
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.error {
+  display: block;
+  margin-top: 0.125rem;
+  font-size: 0.8125rem;
+  color: var(--terracotta-fonce);
+}
+
+.hint {
+  margin-top: 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+}
+
+.grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.span2 {
+  grid-column: span 2;
+}
+
+/* Tous les choix sont de vrais boutons radio, masqués : la carte entière se coche. */
+.size input,
+.option input,
+.quartier input,
+.day input,
+.slot input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- 1. Le bouquet ---------- */
+
+.bouquetRow {
+  display: grid;
+  grid-template-columns: 6rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.thumb,
+.thumbEmpty {
+  width: 6rem;
+  border-radius: 6px;
+}
+
+.thumbEmpty {
+  aspect-ratio: 4 / 5;
+  background: var(--sauge-pale);
+}
+
+.bouquetFields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sizes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.size {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  min-height: 3rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: 6px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.sizeLetter {
+  color: var(--tige-doux);
+  font-size: 0.875rem;
+}
+
+.sizePrice {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- 2. Retrait ou livraison ---------- */
+
+.modes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.option {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1rem 1.125rem;
+  border-radius: 8px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.optionTitle {
+  font-weight: 600;
+}
+
+.optionText {
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+}
+
+.delivery {
+  overflow: hidden;
+}
+
+.deliveryInner {
+  padding-top: 1.5rem;
+}
+
+.quartiers {
+  border-radius: 8px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+}
+
+.quartiers:focus {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 2px;
+}
+
+/* Une ligne par quartier, alignée comme un tableau : nom, code postal, tarif à droite. */
+.quartier {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.875rem;
+  min-height: 3rem;
+  padding: 0 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.quartier + .quartier {
+  box-shadow: inset 0 1px 0 var(--filet);
+}
+
+.quartier::before {
+  content: "";
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px rgba(36, 56, 44, 0.45);
+  transition: box-shadow 0.2s;
+}
+
+.quartier:hover {
+  background: rgba(155, 174, 149, 0.12);
+}
+
+.quartier:has(input:checked) {
+  background: rgba(237, 207, 200, 0.55);
+}
+
+.quartier:has(input:checked)::before {
+  box-shadow: inset 0 0 0 5px var(--tige);
+}
+
+.quartier:has(input:focus-visible) {
+  outline: 2px solid var(--tige);
+  outline-offset: -2px;
+}
+
+.quartierCode {
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+  font-variant-numeric: tabular-nums;
+}
+
+.quartierPrice {
+  min-width: 3.5rem;
+  text-align: right;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.delivery .grid2 {
+  margin-top: 1.5rem;
+}
+
+/* ---------- 3. Le jour ---------- */
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.day {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 3.75rem;
+  border-radius: 8px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.dayTop {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.dayBottom {
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+}
+
+.slots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3rem;
+  padding: 0 0.5rem;
+  border-radius: 8px;
+  background: var(--papier);
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.22);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.slot:has(input:disabled) {
+  cursor: not-allowed;
+  color: rgba(36, 56, 44, 0.4);
+  background: transparent;
+  box-shadow: inset 0 0 0 1px var(--filet);
+}
+
+.slotOut {
+  font-size: 0.75rem;
+}
+
+/* L'état choisi, commun à toutes les cartes cochables. */
+.size:hover,
+.option:hover,
+.day:hover,
+.slot:not(:has(input:disabled)):hover {
+  box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.45);
+}
+
+.size:has(input:checked),
+.option:has(input:checked),
+.day:has(input:checked),
+.slot:has(input:checked) {
+  background: var(--rose);
+  box-shadow: inset 0 0 0 1.5px var(--tige);
+}
+
+.size:has(input:focus-visible),
+.option:has(input:focus-visible),
+.day:has(input:focus-visible),
+.slot:has(input:focus-visible) {
+  outline: 2px solid var(--tige);
+  outline-offset: 2px;
+}
+
+.size:has(input:disabled) {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* ---------- Récapitulatif ---------- */
+
+.lines {
+  display: flex;
+  flex-direction: column;
+}
+
+.lines div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--filet);
+  font-size: 0.9375rem;
+}
+
+.lines div:first-child {
+  padding-top: 0;
+}
+
+.lines dt {
+  color: var(--tige-doux);
+}
+
+.lines dd {
+  font-weight: 600;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.lines .when {
+  font-weight: 500;
+  max-width: 14rem;
+}
+
+.total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 1rem 0 1.25rem;
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.75rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.submit {
+  width: 100%;
+  min-height: 3.25rem;
+  border-radius: 999px;
+  background: var(--terracotta);
+  color: var(--papier);
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.2s, opacity 0.2s;
+}
+
+.submit:hover {
+  background: var(--terracotta-fonce);
+}
+
+.submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+
+.concept {
+  margin-top: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--tige-doux);
+  text-align: center;
+}
+
+/* ---------- Tablette et téléphone ---------- */
+
+@media (max-width: 1023px) {
+  .steps {
+    grid-column: 1 / -1;
+  }
+
+  .summary {
+    grid-column: 1 / -1;
+    position: static;
+    margin-top: 0.5rem;
+  }
+}
+
+@media (max-width: 759px) {
+  .bouquetRow {
+    grid-template-columns: 4.5rem minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .thumb,
+  .thumbEmpty {
+    width: 4.5rem;
+  }
+
+  .size {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .modes,
+  .grid2 {
+    grid-template-columns: 1fr;
+  }
+
+  .span2 {
+    grid-column: auto;
+  }
+
+  .days {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .slots {
+    grid-template-columns: 1fr;
+  }
+
+  .summary {
+    padding: 1.25rem;
+  }
+}

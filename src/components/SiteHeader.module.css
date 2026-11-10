@@ -1,0 +1,116 @@
+.header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 60;
+  background: rgba(var(--chaux-rgb), 0.86);
+  backdrop-filter: blur(14px) saturate(1.1);
+  -webkit-backdrop-filter: blur(14px) saturate(1.1);
+  box-shadow: 0 1px 0 var(--filet);
+}
+
+.band {
+  height: var(--band-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--gutter);
+  background: var(--sauge-pale);
+  color: var(--tige-doux);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bar {
+  height: var(--header-h);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0 var(--gutter);
+}
+
+.wordmark {
+  font-family: var(--font-titre), Georgia, serif;
+  font-size: 1.25rem;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.nav ul {
+  display: flex;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav a {
+  font-size: 0.9375rem;
+  text-decoration: none;
+  color: var(--tige-doux);
+  background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+  transition: background-size 0.25s, color 0.2s;
+}
+
+.nav a:hover {
+  color: var(--tige);
+  background-size: 100% 1px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-left: auto;
+}
+
+.phone {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.phone:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.badgeShort {
+  display: none;
+}
+
+/* Écran moyen : le menu se retire, la barre garde l'essentiel. */
+@media (max-width: 1179px) {
+  .nav {
+    display: none;
+  }
+}
+
+/* Téléphone : le nom et le badge. Commander, appeler et l'itinéraire sont dans la barre du bas. */
+@media (max-width: 759px) {
+  .bar {
+    justify-content: space-between;
+  }
+
+  .wordmark {
+    font-size: 1.125rem;
+  }
+
+  .phone,
+  .order,
+  .badgeFull {
+    display: none;
+  }
+
+  .badgeShort {
+    display: inline-flex;
+  }
+}
