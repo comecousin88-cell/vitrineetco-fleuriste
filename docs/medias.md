@@ -187,3 +187,28 @@ Le site fonctionne sans eux, mais ils le rendent plus vivant et plus crédible.
 - **Indispensables** : 2 vidéos du hero, 4 vidéos d'éclosion, 42 photos.
 - **Secondaires** : 2 vidéos d'ambiance, 22 photos (dont les 8 gros plans du catalogue).
 - L'image de partage pour les réseaux (1200×630) sera tirée de `hero-fin.jpg` : rien à générer.
+
+---
+
+## État au 10 novembre 2026
+
+Préparation : `python scripts/prepare_images.py` (photos) et `python scripts/prepare_hero.py` (vidéo du hero).
+Les deux scripts relisent `source/` à chaque lancement : déposer un fichier sous son nom et relancer suffit.
+
+**Intégrés** : la vidéo du hero (`hero-composition.mp4`, 80 images par série) et sa dernière image comme affiche,
+les 8 bouquets, les 4 univers, les 6 photos Deuil, 7 photos Mariages, 4 photos Ateliers, `boutique-interieur`.
+
+**Encore attendus** (emplacements provisoires) : `hero-ruban.mp4` et le nouveau `hero-fin.jpg`, la nouvelle version
+de `bouquet-le-coin.jpg`, les 4 saisons et les 4 éclosions, `fleuriste-portrait`, `boutique-facade`,
+`abonnement-maison`, `abonnement-entreprise`, les 3 producteurs. Secondaires : `atelier-sec` (emplacement sur la
+page Ateliers), et les 3 photos de galerie, qui n'apparaissent qu'une fois fournies.
+
+**Non utilisés** : `hero-debut.jpeg` et l'ancien `hero-fin.jpeg` (bouquet différent de la vidéo).
+
+**Remarques de relecture** (aucun texte lisible, mains réalistes partout) :
+- `hero-composition.mp4` est en 1280×720 : en dessous du 1920×1080 prévu. Sur grand écran, l'image est agrandie.
+- `deuil-coussin` (sur une dalle basse) et `deuil-couronne` (trépied posé sur un bloc) s'écartent du socle commun
+  des trois autres compositions Deuil. À refaire si possible sur le même socle.
+- `ateliers-ouverture` montre des visages de profil, petits, alors que la consigne était « aucun visage ».
+- `mariage-arche`, `mariage-ceremonie` et `mariage-table` sont en 16:9 au lieu de 3:2 et 4:5 : la galerie suit leur
+  format réel, rien à refaire.

@@ -4,8 +4,24 @@
     {
       "name": "fleuriste",
       "runtimeExecutable": "npx",
-      "runtimeArgs": ["next", "dev", "-p", "3013"],
+      "runtimeArgs": [
+        "next",
+        "dev",
+        "-p",
+        "3013"
+      ],
       "port": 3013
+    },
+    {
+      "name": "fleuriste-prod",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "next",
+        "start",
+        "-p",
+        "3014"
+      ],
+      "port": 3014
     }
   ]
 }

@@ -1,3 +1,5 @@
+import { PHOTOS } from "@/data/media";
+
 // Mariages et événements : ce que je fleuris, la galerie, et les choix de la demande de devis.
 // Photos : voir docs/medias.md, section Mariages & événements.
 
@@ -11,18 +13,26 @@ export const PRESTATIONS = [
 
 export type GalleryItem = { file: string; src: string; ratio: string; alt: string; legende: string };
 
-const item = (name: string, ratio: string, alt: string, legende: string): GalleryItem => ({
-  file: `${name}.jpg`,
-  src: `/mariages/${name}.webp`,
-  ratio,
-  alt,
-  legende,
-});
+// Le format affiché est celui de la photo préparée ; en attendant la photo, celui qui est prévu.
+const item = (name: string, ratio: string, alt: string, legende: string): GalleryItem => {
+  const src = `/mariages/${name}.webp`;
+  const ready = PHOTOS[src];
+  return {
+    file: `${name}.jpg`,
+    src,
+    ratio: ready ? `${ready.width} / ${ready.height}` : ratio,
+    alt,
+    legende,
+  };
+};
 
-export const GALERIE: GalleryItem[] = [
+// Les trois dernières photos sont secondaires : elles n'apparaissent dans la galerie qu'une fois fournies.
+const SECONDAIRES = ["mariage-couronne-cheveux", "mariage-centre-de-table", "evenement-vitrine"];
+
+const TOUTES: GalleryItem[] = [
   item("mariage-arche", "3 / 2", "Une arche fleurie blanche et verte dans un jardin.", "Une arche blanche et verte, dans un jardin du Perche"),
   item("mariage-bouquet", "4 / 5", "Un bouquet de mariée en cascade tenu à deux mains.", "Le bouquet de mariée, en cascade"),
-  item("mariage-boutonniere", "1 / 1", "Une boutonnière sur le revers d'une veste en lin sauge.", "Une boutonnière assortie"),
+  item("mariage-boutonniere", "1 / 1", "Une boutonnière glissée dans la poche d'une veste en lin sauge.", "Une boutonnière assortie"),
   item("mariage-table", "3 / 2", "Un centre de table bas avec des verres et un linge de lin.", "Des centres de table bas, pour se voir d'un bout à l'autre"),
   item("mariage-ceremonie", "4 / 5", "Une allée de cérémonie bordée de bouquets dans des seaux.", "Une allée de seaux fleuris"),
   item("evenement-accueil", "4 / 5", "Une grande composition sur un comptoir d'accueil d'entreprise.", "L'accueil d'une entreprise, renouvelé chaque semaine"),
@@ -30,6 +40,8 @@ export const GALERIE: GalleryItem[] = [
   item("mariage-centre-de-table", "4 / 5", "Un centre de table haut dans un vase en verre, à la lumière des bougies.", "Un centre de table haut, pour un dîner"),
   item("evenement-vitrine", "3 / 2", "Une vitrine de boutique décorée de fleurs pour un lancement.", "La vitrine d'une boutique voisine, pour son lancement"),
 ];
+
+export const GALERIE = TOUTES.filter(({ src, file }) => src in PHOTOS || !SECONDAIRES.includes(file.replace(".jpg", "")));
 
 export const TYPES_EVENEMENT = ["Mariage", "Fête de famille", "Entreprise", "Autre"] as const;
 

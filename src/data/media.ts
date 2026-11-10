@@ -1,19 +1,24 @@
-// Les séquences d'images. Chaque dossier contient une série par format (landscape, portrait, hd), avec des
-// fichiers 0001.webp, 0002.webp, etc., préparés par les scripts de scripts/ à partir des originaux de source/.
-// Tant qu'une série n'est pas prête, count vaut 0 et le site affiche un emplacement provisoire.
+import photos from "./photos.json";
 
+// La séquence du hero, découpée par scripts/prepare_hero.py à partir de source/hero-composition.mp4.
+// Deux séries de fichiers 0001.webp, 0002.webp… : landscape (écrans en largeur) et portrait (téléphones).
+// Si le nombre d'images change dans le script, le reporter ici. À 0, le site affiche un emplacement provisoire.
 export const HERO_FRAMES = {
   folder: "/hero",
-  count: 0,
-  hdFromWidth: 1700, // à partir de cette largeur en pixels réels, la série en 1920 px
-  source: "hero-composition.mp4 + hero-ruban.mp4",
+  count: 80,
+  source: "hero-composition.mp4",
 } as const;
+
+// L'image finale du hero : affiche, version sans animation, et fond avant que la séquence n'arrive.
+// Provisoirement la dernière image de la vidéo, en attendant hero-ruban.mp4 et le nouveau hero-fin.
+export const HERO_POSTER = { src: "/hero/fin.webp", file: "hero-fin.jpg" } as const;
 
 export const PHOTO_QUALITY = 82;
 
-// Les photos déjà préparées dans public/. Une photo absente de cette liste s'affiche en emplacement
-// provisoire, avec le nom du fichier attendu dans source/. Il suffit d'ajouter son chemin ici une fois prête.
-export const READY_PHOTOS = new Set<string>([]);
+// Les photos déjà préparées dans public/ et leurs dimensions, écrites par scripts/prepare_images.py.
+// Une photo absente de cette liste s'affiche en emplacement provisoire, avec le nom du fichier attendu.
+export const PHOTOS: Record<string, { width: number; height: number }> = photos;
+export const isReady = (src: string) => src in PHOTOS;
 
 // Le chemin d'une photo de bouquet dans public/, et le nom de son original dans source/.
 export const bouquetPhoto = (slug: string) => ({

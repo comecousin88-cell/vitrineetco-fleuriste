@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { PHOTO_QUALITY, READY_PHOTOS } from "@/data/media";
+import { isReady, PHOTO_QUALITY } from "@/data/media";
 import styles from "./Photo.module.css";
 
 type Props = {
@@ -18,7 +18,7 @@ export default function Photo({ src, file, alt, ratio, sizes, className, layerCl
   return (
     <div className={`${styles.frame} ${className ?? ""}`} style={ratio ? { aspectRatio: ratio } : undefined}>
       <div className={`${styles.layer} ${layerClassName ?? ""}`} data-photo-layer>
-        {READY_PHOTOS.has(src) ? (
+        {isReady(src) ? (
           <Image src={src} alt={alt} fill sizes={sizes} quality={PHOTO_QUALITY} priority={priority} className={styles.image} />
         ) : (
           <div className={styles.placeholder} role="img" aria-label={alt}>

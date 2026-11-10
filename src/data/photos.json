@@ -1,0 +1,126 @@
+{
+  "/ateliers/atelier-centre-de-table.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/ateliers/atelier-champetre.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/ateliers/atelier-couronne.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/ateliers/ateliers-ouverture.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/bouquets/champ-libre.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/douceur.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/grand-amour.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/joue-rose.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/le-coin.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/petit-matin.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/sous-bois.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/bouquets/terre-cuite.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/bouquet-blanc.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/couronne.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/coussin.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/dessus-cercueil.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/gerbe.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/deuil/ouverture.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/fleuriste/boutique-interieur.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/hero/fin.webp": {
+    "width": 1280,
+    "height": 720
+  },
+  "/mariages/evenement-accueil.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/mariages/mariage-arche.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/mariages/mariage-bouquet.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/mariages/mariage-boutonniere.webp": {
+    "width": 1600,
+    "height": 1600
+  },
+  "/mariages/mariage-ceremonie.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/mariages/mariage-ouverture.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/mariages/mariage-table.webp": {
+    "width": 2400,
+    "height": 1340
+  },
+  "/univers/ateliers.webp": {
+    "width": 2200,
+    "height": 1772
+  },
+  "/univers/bouquets.webp": {
+    "width": 2200,
+    "height": 1772
+  },
+  "/univers/deuil.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/univers/mariages.webp": {
+    "width": 1600,
+    "height": 1986
+  }
+}

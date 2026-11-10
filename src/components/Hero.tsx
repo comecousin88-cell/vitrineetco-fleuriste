@@ -6,9 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Cta from "@/components/Cta";
 import OpenBadge from "@/components/OpenBadge";
+import Photo from "@/components/Photo";
 import { BOUTIQUE } from "@/data/boutique";
 import { BOUQUET_SIGNATURE, commanderHref } from "@/data/bouquets";
-import { HERO_FRAMES } from "@/data/media";
+import { HERO_FRAMES, HERO_POSTER } from "@/data/media";
 import { createFramePlayer } from "@/lib/frames";
 import { formatPrice } from "@/lib/format";
 import { deliveryLine } from "@/lib/hours";
@@ -81,8 +82,8 @@ export default function Hero() {
           const video = { frame: 0 };
           const [canvas] = q<HTMLCanvasElement>("[data-h=sequence]");
           if (hasFrames && canvas) {
-            const { count, folder, hdFromWidth } = HERO_FRAMES;
-            const series = !wide ? "portrait" : window.innerWidth * window.devicePixelRatio >= hdFromWidth ? "hd" : "landscape";
+            const { count, folder } = HERO_FRAMES;
+            const series = wide ? "landscape" : "portrait";
             player = createFramePlayer(canvas, `${folder}/${series}`, count);
           }
           const [progress] = q<HTMLElement>("[data-h=progress]");
@@ -152,6 +153,15 @@ export default function Hero() {
       <div className={styles.stage} data-h="stage">
         <div className={styles.media} data-h="media">
           <div className={styles.shift} data-h="shift">
+            {/* L'affiche : le bouquet fini. C'est elle qu'on voit sans animation ; avec, la séquence la recouvre. */}
+            <Photo
+              src={HERO_POSTER.src}
+              file={HERO_POSTER.file}
+              alt="Un bouquet de renoncules, de roses de jardin et d'eucalyptus, tenu d'une main au-dessus de la table."
+              sizes="100vw"
+              className={styles.poster}
+              priority
+            />
             {hasFrames ? (
               <canvas
                 className={styles.canvas}
