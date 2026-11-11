@@ -1,1 +1,5 @@
+# les originaux lourds ne sont jamais envoyés en ligne
 source/
+# Vercel refait le build lui-même
+.next/
+node_modules/
