@@ -1,0 +1,32 @@
+.cart {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  color: var(--tige);
+  transition: background-color 0.2s;
+}
+
+.cart:hover {
+  background: var(--sauge-pale);
+}
+
+.count {
+  position: absolute;
+  top: 0.1rem;
+  right: 0;
+  display: grid;
+  place-items: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: var(--terracotta);
+  color: var(--papier);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}

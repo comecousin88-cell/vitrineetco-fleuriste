@@ -15,7 +15,10 @@ type Props = { confirmed: Confirmed; onRestart: () => void };
 
 // La confirmation, à la place du formulaire : tout ce qui a été commandé, et la référence à donner au téléphone.
 export default function OrderConfirmation({ confirmed: { reference, request }, onRestart }: Props) {
-  const bouquet = BOUQUETS.find(({ slug }) => slug === request.bouquet);
+  const lines = request.items.map(({ slug, taille, qty }) => ({ nom: BOUQUETS.find((b) => b.slug === slug)?.nom ?? slug, taille, qty }));
+  const count = request.items.reduce((sum, { qty }) => sum + qty, 0);
+  // « Le Coin », ou « vos 3 bouquets » : la phrase suit le panier.
+  const what = count === 1 ? lines[0].nom : `vos ${count} bouquets`;
   const quartier = QUARTIERS.find(({ id }) => id === request.livraison?.quartier);
   const prenom = request.client.nom.split(/\s+/)[0];
   const creneau = creneaux(request.date, request.mode).find(({ id }) => id === request.creneau);
@@ -33,8 +36,8 @@ export default function OrderConfirmation({ confirmed: { reference, request }, o
       <p className={styles.title}>Merci {prenom}, c&apos;est noté.</p>
       <p className={styles.text}>
         {request.mode === "livraison"
-          ? `Je compose ${bouquet?.nom} et je le livre ${quand}.`
-          : `${bouquet?.nom} vous attend à la boutique ${quand}.`}
+          ? `Je compose ${what} et je ${count === 1 ? "le" : "les"} livre ${quand}.`
+          : `${count === 1 ? what : what.charAt(0).toUpperCase() + what.slice(1)} ${count === 1 ? "vous attend" : "vous attendent"} à la boutique ${quand}.`}
       </p>
 
       <dl className={styles.lines}>
@@ -43,9 +46,14 @@ export default function OrderConfirmation({ confirmed: { reference, request }, o
           <dd className={styles.reference}>{reference}</dd>
         </div>
         <div>
-          <dt>Bouquet</dt>
+          <dt>{count === 1 ? "Bouquet" : "Bouquets"}</dt>
           <dd>
-            {bouquet?.nom}, taille {request.taille}
+            {lines.map(({ nom, taille, qty }) => (
+              <span key={`${nom}-${taille}`} className={styles.item}>
+                {qty > 1 ? `${qty} × ` : ""}
+                {nom}, taille {taille}
+              </span>
+            ))}
           </dd>
         </div>
         <div>

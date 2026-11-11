@@ -31,8 +31,8 @@ SQUARE = 1600
 
 # Nom de l'original dans source/ (sans extension) -> chemin dans public/, largeur maximale.
 PHOTOS = {
-    # Hero : la dernière image de la vidéo, en attendant hero-ruban.mp4 et le nouveau hero-fin.
-    "hero-composition-fin": ("hero/fin.webp", 1280),
+    # Hero : l'affiche, la dernière image nette de hero-ruban.mp4 agrandie en 2560 px (bouquet noué).
+    "hero-fin": ("hero/fin.webp", WIDE),
     # Catalogue
     **{f"bouquet-{slug}": (f"bouquets/{slug}.webp", PORTRAIT) for slug in (
         "le-coin", "petit-matin", "joue-rose", "terre-cuite", "grand-amour", "champ-libre", "douceur", "sous-bois",

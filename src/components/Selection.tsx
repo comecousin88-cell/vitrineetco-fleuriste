@@ -4,10 +4,8 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import BouquetCard from "@/components/BouquetCard";
 import { BOUTIQUE, telHref } from "@/data/boutique";
-import { BOUQUETS, type Taille } from "@/data/bouquets";
+import { BOUQUETS } from "@/data/bouquets";
 import { BUDGETS, COULEURS, filterLabel, matches, NO_FILTERS, OCCASIONS, sizesInBudget, type Filters } from "@/lib/catalogue";
-import { scrollToSection } from "@/lib/lenis";
-import { setDraft } from "@/lib/orderDraft";
 import styles from "./Selection.module.css";
 
 export default function Selection() {
@@ -18,11 +16,6 @@ export default function Selection() {
   // Un second appui sur le même filtre le retire.
   const toggle = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((current) => ({ ...current, [key]: current[key] === value ? null : value }));
-
-  const order = (slug: string, taille: Taille) => {
-    setDraft(slug, taille);
-    scrollToSection("commander");
-  };
 
   return (
     <section id="selection" className={styles.section} aria-labelledby="selection-title">
@@ -87,7 +80,6 @@ export default function Selection() {
               key={bouquet.slug}
               bouquet={bouquet}
               allowed={sizesInBudget(bouquet, filters.budget)}
-              onOrder={(taille) => order(bouquet.slug, taille)}
             />
           ))}
         </AnimatePresence>

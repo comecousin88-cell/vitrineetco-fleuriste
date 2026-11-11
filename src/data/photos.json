@@ -1,4 +1,12 @@
 {
+  "/abonnement/entreprise.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/abonnement/maison.webp": {
+    "width": 1600,
+    "height": 1986
+  },
   "/ateliers/atelier-centre-de-table.webp": {
     "width": 1600,
     "height": 1986
@@ -75,9 +83,29 @@
     "width": 2400,
     "height": 1340
   },
+  "/fleuriste/portrait.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/fleuriste/producteur-champ.webp": {
+    "width": 800,
+    "height": 800
+  },
+  "/fleuriste/producteur-serre.webp": {
+    "width": 800,
+    "height": 800
+  },
+  "/fleuriste/producteur-verger.webp": {
+    "width": 800,
+    "height": 800
+  },
   "/hero/fin.webp": {
-    "width": 1280,
-    "height": 720
+    "width": 2400,
+    "height": 1350
+  },
+  "/infos/boutique-facade.webp": {
+    "width": 2400,
+    "height": 1610
   },
   "/mariages/evenement-accueil.webp": {
     "width": 1600,
@@ -106,6 +134,22 @@
   "/mariages/mariage-table.webp": {
     "width": 2400,
     "height": 1340
+  },
+  "/saisons/automne.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/saisons/ete.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/saisons/hiver.webp": {
+    "width": 1600,
+    "height": 1986
+  },
+  "/saisons/printemps.webp": {
+    "width": 1600,
+    "height": 1986
   },
   "/univers/ateliers.webp": {
     "width": 2200,

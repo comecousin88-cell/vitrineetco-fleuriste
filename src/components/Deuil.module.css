@@ -223,8 +223,11 @@
     padding-top: calc(var(--top-h) + 2rem);
   }
 
-  .introPhoto {
+  .intro > [data-fade]:last-child {
     order: -1;
+  }
+
+  .introPhoto {
     aspect-ratio: 16 / 9;
   }
 

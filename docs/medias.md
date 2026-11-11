@@ -190,25 +190,35 @@ Le site fonctionne sans eux, mais ils le rendent plus vivant et plus crédible.
 
 ---
 
-## État au 10 novembre 2026
+## État au 11 novembre 2026
 
-Préparation : `python scripts/prepare_images.py` (photos) et `python scripts/prepare_hero.py` (vidéo du hero).
+Préparation : `python scripts/prepare_images.py` (photos),
+`python scripts/prepare_hero.py --esrgan chemin/realesrgan-ncnn-vulkan.exe` (séquence du hero, agrandie en 1920 px)
+et `python scripts/prepare_eclosions.py` (fleurs qui s'ouvrent, dans les saisons).
 Les deux scripts relisent `source/` à chaque lancement : déposer un fichier sous son nom et relancer suffit.
 
-**Intégrés** : la vidéo du hero (`hero-composition.mp4`, 80 images par série) et sa dernière image comme affiche,
-les 8 bouquets, les 4 univers, les 6 photos Deuil, 7 photos Mariages, 4 photos Ateliers, `boutique-interieur`.
+**Intégrés** : la séquence du hero (`hero-composition.mp4` puis `hero-ruban.mp4`, 96 images par série) ; l'affiche
+`hero-fin.jpg` (image 237 de `hero-ruban.mp4`, la dernière nette, agrandie en 2560×1440) ; les 8 bouquets, les 4
+univers, les 4 saisons, les 6 photos Deuil, 7 photos Mariages, 4 photos Ateliers, le portrait, l'intérieur et la
+façade de la boutique, les 2 photos d'abonnement et les 3 producteurs ; la nouvelle version de `bouquet-le-coin.jpg`
+(raccord avec le hero) ; les éclosions de la tulipe et de la pivoine (60 images chacune, du bouton fermé à la fleur
+ouverte, à progression régulière).
 
-**Encore attendus** (emplacements provisoires) : `hero-ruban.mp4` et le nouveau `hero-fin.jpg`, la nouvelle version
-de `bouquet-le-coin.jpg`, les 4 saisons et les 4 éclosions, `fleuriste-portrait`, `boutique-facade`,
-`abonnement-maison`, `abonnement-entreprise`, les 3 producteurs. Secondaires : `atelier-sec` (emplacement sur la
-page Ateliers), et les 3 photos de galerie, qui n'apparaissent qu'une fois fournies.
+**Encore attendus** : `eclosion-dahlia.mp4` et `eclosion-amaryllis.mp4`. En attendant, l'automne et l'hiver
+montrent un zoom lent sur un détail de leur photo de saison ; le script des éclosions les remplacera de lui-même.
+Secondaires : `atelier-sec` (emplacement sur la page Ateliers) et les 3 photos de galerie, qui
+n'apparaissent qu'une fois fournies.
 
-**Non utilisés** : `hero-debut.jpeg` et l'ancien `hero-fin.jpeg` (bouquet différent de la vidéo).
+**Non utilisés** : `hero-debut.jpeg`, `hero-fin-ancien.jpg` (ancien bouquet), `hero-composition-fin.jpg` et
+`bouquet-le-coin-ancien.jpeg`.
 
 **Remarques de relecture** (aucun texte lisible, mains réalistes partout) :
-- `hero-composition.mp4` est en 1280×720 : en dessous du 1920×1080 prévu. Sur grand écran, l'image est agrandie.
-- `deuil-coussin` (sur une dalle basse) et `deuil-couronne` (trépied posé sur un bloc) s'écartent du socle commun
-  des trois autres compositions Deuil. À refaire si possible sur le même socle.
+- Les vidéos du hero sont en 1280×720 : la séquence est agrandie par Real-ESRGAN, avec un lissage du détail d'une
+  image à l'autre pour éviter le scintillement.
+- `hero-fin.jpg` : vus de loin, les plis du revers de manche évoquent des lettres. En gros plan, ce n'est que du lin.
+- `boutique-facade` : deux cagettes portent un faux tampon illisible, invisible à la taille du site.
+- `deuil-coussin` (dalle basse) et `deuil-couronne` (trépied posé sur un bloc) s'écartent du socle commun des
+  trois autres compositions Deuil. À refaire si possible sur le même socle.
 - `ateliers-ouverture` montre des visages de profil, petits, alors que la consigne était « aucun visage ».
 - `mariage-arche`, `mariage-ceremonie` et `mariage-table` sont en 16:9 au lieu de 3:2 et 4:5 : la galerie suit leur
   format réel, rien à refaire.

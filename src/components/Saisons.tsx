@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import Photo from "@/components/Photo";
 import { currentSeasonIndex, SAISONS, saisonPhoto } from "@/data/saisons";
+import { isReady } from "@/data/media";
 import { createFramePlayer } from "@/lib/frames";
 import { scrollToY } from "@/lib/lenis";
 import { useNow } from "@/lib/useNow";
@@ -29,8 +30,8 @@ export default function Saisons() {
       const q = gsap.utils.selector(root);
       const blooms = q<HTMLElement>("[data-s=bloom]");
 
-      // Une séquence par saison si elle est prête. Sinon, l'emplacement provisoire montre l'ouverture
-      // par une jauge.
+      // Une séquence par saison si elle est prête. Sinon, le repli (zoom sur un détail de la photo) suit la même
+      // progression, par la variable CSS --p.
       const players = SAISONS.map(({ eclosion }, index) => {
         const canvas = blooms[index]?.querySelector("canvas");
         return canvas && eclosion.count > 0 ? createFramePlayer(canvas, eclosion.folder, eclosion.count, { autoStart: false }) : null;
@@ -171,6 +172,11 @@ export default function Saisons() {
                   <div className={styles.bloom} data-s="bloom">
                     {saison.eclosion.count > 0 ? (
                       <canvas className={styles.canvas} role="img" aria-label={`Une ${saison.eclosion.fleur} qui s'ouvre.`} />
+                    ) : isReady(photo.src) ? (
+                      // Le repli : un détail de la photo de saison, sur lequel on s'approche lentement.
+                      <div className={styles.detail} style={{ ["--fx" as string]: saison.detail.x, ["--fy" as string]: saison.detail.y }}>
+                        <Photo src={photo.src} file={photo.file} alt="" sizes="(min-width: 760px) 20vw, 40vw" layerClassName={styles.detailLayer} />
+                      </div>
                     ) : (
                       <div className={styles.bloomPlaceholder} aria-hidden="true">
                         <span>{saison.eclosion.file}</span>

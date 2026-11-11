@@ -4,6 +4,11 @@
   min-width: 0;
 }
 
+.photoWrap {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 .photo {
   border-radius: 6px;
 }

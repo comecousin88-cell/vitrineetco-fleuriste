@@ -22,6 +22,11 @@
   color: var(--tige-doux);
 }
 
+.openingWrap {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 .opening {
   aspect-ratio: 16 / 7;
   border-radius: 6px;

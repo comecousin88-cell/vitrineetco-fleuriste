@@ -17,7 +17,7 @@ export const BOUQUETS: Bouquet[] = [
   {
     slug: "le-coin",
     nom: "Le Coin",
-    fleurs: "Renoncules rose poudré, tulipes blanches, roses pêche, eucalyptus",
+    fleurs: "Renoncule rose poudré, rose de jardin pêche, lisianthus blanc, eucalyptus, graminée",
     couleur: "rose",
     occasions: ["merci", "anniversaire"],
     prix: { S: 35, M: 50, L: 70 },

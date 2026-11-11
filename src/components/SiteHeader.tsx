@@ -1,3 +1,4 @@
+import CartButton from "@/components/CartButton";
 import Cta from "@/components/Cta";
 import OpenBadge from "@/components/OpenBadge";
 import { BOUTIQUE, telHref } from "@/data/boutique";
@@ -40,6 +41,8 @@ export default function SiteHeader({ action }: { action?: PageAction }) {
           <a href={telHref(BOUTIQUE.phone)} className={styles.phone}>
             {BOUTIQUE.phone}
           </a>
+          {/* Le panier des bouquets : pas sur la page Deuil, qui a sa propre commande. */}
+          {action !== "deuil" && <CartButton />}
           <Cta href={order.href} size="petit" variant={order.tone} className={styles.order}>
             {order.label}
           </Cta>

@@ -38,6 +38,11 @@
   font-weight: 600;
 }
 
+.bloomFrame {
+  border-radius: 6px;
+  overflow: hidden;
+}
+
 .introPhoto {
   aspect-ratio: 16 / 10;
   border-radius: 6px;
@@ -236,8 +241,11 @@
     padding-top: calc(var(--top-h) + 2rem);
   }
 
-  .introPhoto {
+  .intro > .bloomFrame {
     order: -1;
+  }
+
+  .introPhoto {
     aspect-ratio: 16 / 9;
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import OrderConfirmation from "@/components/OrderConfirmation";
 import Photo from "@/components/Photo";
 import { BOUTIQUE } from "@/data/boutique";
@@ -12,13 +12,14 @@ import { formatPrice } from "@/lib/format";
 import { deliveryLine } from "@/lib/hours";
 import { EASE_OUT } from "@/lib/motion";
 import { submitOrder, type OrderRequest } from "@/lib/order";
-import { setDraft, setDraftSize, useDraft } from "@/lib/orderDraft";
+import { addToCart, cartCount, clearCart, MAX_PER_LINE, setQty, useCart } from "@/lib/cart";
 import { slotsFor, upcomingDays, type Mode } from "@/lib/slots";
 import { useNow } from "@/lib/useNow";
 import { emailError, nameError, phoneError, requiredError } from "@/lib/validation";
 import styles from "./Commander.module.css";
 
 const TAILLES: Taille[] = ["S", "M", "L"];
+const bouquetOf = (slug: string) => BOUQUETS.find((bouquet) => bouquet.slug === slug)!;
 
 type Fields = {
   quartier: string;
@@ -52,9 +53,11 @@ export type Confirmed = { reference: string; request: OrderRequest };
 
 export default function Commander() {
   const now = useNow();
-  const draft = useDraft();
-  const bouquet = draft ? BOUQUETS.find(({ slug }) => slug === draft.slug) : undefined;
-  const taille = draft?.taille ?? "M";
+  const cart = useCart();
+  // Moins d'animations : les lignes du panier apparaissent et disparaissent sans glisser.
+  const reduceMotion = useReducedMotion();
+  const count = cartCount(cart);
+  const subtotal = cart.reduce((sum, { slug, taille, qty }) => sum + bouquetOf(slug).prix[taille] * qty, 0);
 
   const [mode, setMode] = useState<Mode>("livraison");
   const [fields, setFields] = useState<Fields>(EMPTY);
@@ -72,7 +75,7 @@ export default function Commander() {
 
   const quartier = QUARTIERS.find(({ id }) => id === fields.quartier);
   const fee = mode === "livraison" ? (quartier?.tarif ?? 0) : 0;
-  const total = (bouquet ? bouquet.prix[taille] : 0) + fee;
+  const total = subtotal + fee;
 
   const set = (key: keyof Fields) => (value: string) => {
     setFields((current) => ({ ...current, [key]: value }));
@@ -81,7 +84,7 @@ export default function Commander() {
 
   function validate(): Errors {
     const found: Errors = {};
-    if (!bouquet) found.bouquet = "Choisissez un bouquet.";
+    if (count === 0) found.bouquet = "Ajoutez au moins un bouquet.";
     if (mode === "livraison") {
       if (!quartier) found.quartier = "Choisissez le quartier de livraison.";
       found.adresse = requiredError(fields.adresse, "Indiquez l'adresse de livraison.") ?? undefined;
@@ -104,11 +107,10 @@ export default function Commander() {
       document.getElementById(`commande-${first}`)?.focus();
       return;
     }
-    if (!bouquet || !day || !slot) return;
+    if (count === 0 || !day || !slot) return;
 
     const request: OrderRequest = {
-      bouquet: bouquet.slug,
-      taille,
+      items: cart.map(({ slug, taille, qty }) => ({ slug, taille, qty })),
       mode,
       livraison:
         mode === "livraison"
@@ -135,6 +137,7 @@ export default function Commander() {
       return;
     }
     setConfirmed({ reference: result.reference, request });
+    clearCart();
     document.getElementById("commander")?.scrollIntoView({ block: "start" });
   }
 
@@ -154,8 +157,6 @@ export default function Commander() {
         {errors[name]}
       </span>
     ) : null;
-
-  const photo = bouquet ? bouquetPhoto(bouquet.slug) : null;
 
   return (
     <section id="commander" className={styles.section} aria-labelledby="commander-title">
@@ -179,53 +180,83 @@ export default function Commander() {
             transition={{ duration: 0.3, ease: EASE_OUT }}
           >
             <div className={styles.steps}>
-              {/* 1. Le bouquet */}
+              {/* 1. Les bouquets du panier */}
               <fieldset className={styles.step}>
                 <legend className={styles.legend}>
-                  <span className={styles.number}>1</span>Le bouquet
+                  <span className={styles.number}>1</span>
+                  {count > 1 ? "Vos bouquets" : "Votre bouquet"}
                 </legend>
-                <div className={styles.bouquetRow}>
-                  {photo && bouquet ? (
-                    <Photo src={photo.src} file={photo.file} alt={`Le bouquet ${bouquet.nom}.`} ratio="4 / 5" sizes="96px" className={styles.thumb} />
-                  ) : (
-                    <div className={styles.thumbEmpty} aria-hidden="true" />
-                  )}
-                  <div className={styles.bouquetFields}>
-                    <label className={styles.field}>
-                      <span className={styles.label}>Bouquet</span>
-                      <select
-                        id="commande-bouquet"
-                        className={styles.input}
-                        value={bouquet?.slug ?? ""}
-                        onChange={(event) => {
-                          setDraft(event.target.value, taille);
-                          setErrors((current) => ({ ...current, bouquet: undefined }));
-                        }}
-                        aria-invalid={Boolean(errors.bouquet)}
-                        aria-describedby={errorId("bouquet")}
-                      >
-                        <option value="" disabled>
-                          Choisissez un bouquet
-                        </option>
-                        {BOUQUETS.map(({ slug, nom, prix }) => (
-                          <option key={slug} value={slug}>
-                            {nom}, dès {formatPrice(prix.S)}
+                {count === 0 ? (
+                  <p className={styles.emptyCart}>Votre panier est vide : choisissez un bouquet ci-dessous, ou dans la sélection.</p>
+                ) : (
+                  <ul className={styles.cartLines}>
+                    <AnimatePresence initial={false}>
+                      {cart.map(({ slug, taille, qty }) => {
+                        const bouquet = bouquetOf(slug);
+                        const photo = bouquetPhoto(slug);
+                        return (
+                          <motion.li
+                            key={`${slug}-${taille}`}
+                            className={styles.cartLine}
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: reduceMotion ? 0 : 0.3, ease: EASE_OUT }}
+                          >
+                            <div className={styles.cartLineInner}>
+                              <Photo src={photo.src} file={photo.file} alt="" ratio="4 / 5" sizes="64px" className={styles.cartThumb} />
+                              <div className={styles.cartName}>
+                                <p className={styles.optionTitle}>{bouquet.nom}</p>
+                                <p className={styles.optionText}>
+                                  Taille {taille}, {formatPrice(bouquet.prix[taille])}
+                                </p>
+                              </div>
+                              <div className={styles.qty} role="group" aria-label={`Quantité, ${bouquet.nom} taille ${taille}`}>
+                                <button type="button" onClick={() => setQty(slug, taille, qty - 1)} aria-label={qty === 1 ? "Retirer du panier" : "Un de moins"}>
+                                  −
+                                </button>
+                                <output aria-live="polite">{qty}</output>
+                                <button type="button" onClick={() => setQty(slug, taille, qty + 1)} disabled={qty >= MAX_PER_LINE} aria-label="Un de plus">
+                                  +
+                                </button>
+                              </div>
+                              <p className={styles.cartPrice}>{formatPrice(bouquet.prix[taille] * qty)}</p>
+                            </div>
+                          </motion.li>
+                        );
+                      })}
+                    </AnimatePresence>
+                  </ul>
+                )}
+                <label className={`${styles.field} ${styles.addBouquet}`}>
+                  <span className={styles.label}>{count === 0 ? "Choisir un bouquet" : "Ajouter un autre bouquet"}</span>
+                  <select
+                    id="commande-bouquet"
+                    className={styles.input}
+                    value=""
+                    onChange={(event) => {
+                      const [slug, taille] = event.target.value.split("|");
+                      if (slug) addToCart(slug, taille as Taille);
+                      setErrors((current) => ({ ...current, bouquet: undefined }));
+                    }}
+                    aria-invalid={Boolean(errors.bouquet)}
+                    aria-describedby={errorId("bouquet")}
+                  >
+                    <option value="" disabled>
+                      Choisissez un bouquet et sa taille
+                    </option>
+                    {BOUQUETS.map(({ slug, nom, prix }) => (
+                      <optgroup key={slug} label={nom}>
+                        {TAILLES.map((t) => (
+                          <option key={t} value={`${slug}|${t}`}>
+                            {nom}, taille {t}, {formatPrice(prix[t])}
                           </option>
                         ))}
-                      </select>
-                    </label>
-                    {errorText("bouquet")}
-                    <div className={styles.sizes} role="radiogroup" aria-label="Taille">
-                      {TAILLES.map((t) => (
-                        <label key={t} className={styles.size}>
-                          <input type="radio" name="taille" value={t} checked={taille === t} disabled={!bouquet} onChange={() => setDraftSize(t)} />
-                          <span className={styles.sizeLetter}>{t}</span>
-                          <span className={styles.sizePrice}>{bouquet ? formatPrice(bouquet.prix[t]) : "–"}</span>
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                      </optgroup>
+                    ))}
+                  </select>
+                  {errorText("bouquet")}
+                </label>
               </fieldset>
 
               {/* 2. Retrait ou livraison */}
@@ -447,10 +478,22 @@ export default function Commander() {
             {/* Le récapitulatif reste à côté du formulaire sur ordinateur, et le termine sur téléphone. */}
             <aside className={styles.summary} aria-label="Récapitulatif">
               <dl className={styles.lines}>
-                <div>
-                  <dt>{bouquet ? `${bouquet.nom}, taille ${taille}` : "Bouquet"}</dt>
-                  <dd>{bouquet ? formatPrice(bouquet.prix[taille]) : "–"}</dd>
-                </div>
+                {count === 0 ? (
+                  <div>
+                    <dt>Bouquet</dt>
+                    <dd>–</dd>
+                  </div>
+                ) : (
+                  cart.map(({ slug, taille, qty }) => (
+                    <div key={`${slug}-${taille}`}>
+                      <dt>
+                        {qty > 1 ? `${qty} × ` : ""}
+                        {bouquetOf(slug).nom}, {taille}
+                      </dt>
+                      <dd>{formatPrice(bouquetOf(slug).prix[taille] * qty)}</dd>
+                    </div>
+                  ))
+                )}
                 <div>
                   <dt>{mode === "livraison" ? `Livraison${quartier ? `, ${quartier.nom}` : ""}` : "Retrait en boutique"}</dt>
                   <dd>{mode === "livraison" ? (quartier ? formatPrice(quartier.tarif) : "–") : "Gratuit"}</dd>

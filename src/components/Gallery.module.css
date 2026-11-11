@@ -1,14 +1,22 @@
-/* Une mosaïque en colonnes : chaque photo garde son format, sans recadrage. */
+/* La mosaïque : des colonnes indépendantes, pour que chacune puisse glisser à sa vitesse. */
 .grid {
-  columns: 3;
+  display: grid;
   column-gap: clamp(1rem, 2.4vw, 2rem);
+  align-items: start;
   margin-top: clamp(2rem, 5vh, 3rem);
-  list-style: none;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.4vw, 2rem);
+  list-style: none;
+  will-change: transform;
+}
+
+/* Pas d'overflow caché ici : au retour de la visionneuse, la photo doit pouvoir revenir à sa place en vol. */
 .item {
-  break-inside: avoid;
-  margin-bottom: clamp(1.5rem, 4vh, 2.5rem);
+  border-radius: 6px;
 }
 
 .open {
@@ -18,85 +26,76 @@
   cursor: zoom-in;
 }
 
-.photo {
+.thumb {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
   border-radius: 6px;
+  background: #e2e7de;
 }
 
-.open :global([data-photo-layer]) > * {
+.image {
+  object-fit: cover;
+}
+
+.thumb .image {
   transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.open:hover :global([data-photo-layer]) > * {
+.open:hover .thumb .image {
   transform: scale(1.025);
-}
-
-.caption {
-  margin-top: 0.625rem;
-  font-size: 0.875rem;
-  color: var(--tige-doux);
 }
 
 /* ---------- Visionneuse ---------- */
 
-.dialog {
-  width: 100%;
-  max-width: none;
-  height: 100%;
-  max-height: none;
-  margin: 0;
-  padding: clamp(1rem, 4vw, 3rem);
-  border: 0;
-  background: rgba(var(--chaux-rgb), 0.97);
-  color: var(--tige);
-  display: none;
-}
-
-.dialog[open] {
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 1.25rem;
+  padding: clamp(1rem, 4vw, 3rem);
+  background: rgba(var(--chaux-rgb), 0.96);
+  cursor: zoom-out;
+  touch-action: pan-y;
 }
 
-.dialog::backdrop {
-  background: rgba(var(--chaux-rgb), 0.6);
-}
-
-.figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.75rem;
-  max-width: 100%;
-}
-
-/* La photo tient dans l'écran, en hauteur comme en largeur, quel que soit son format. */
+/* La grande photo garde exactement le format de la miniature : l'agrandissement reste net, sans déformation. */
 .big {
-  height: min(74vh, 60rem);
-  max-width: 90vw;
+  position: relative;
+  width: min(92vw, calc(78svh * var(--r, 1.5)));
+  overflow: hidden;
   border-radius: 6px;
+  background: #e2e7de;
+  cursor: grab;
+  touch-action: pan-y;
 }
 
-.bigCaption {
-  display: flex;
-  gap: 1rem;
-  font-size: 0.9375rem;
-}
-
-.count {
-  color: var(--tige-doux);
-  font-variant-numeric: tabular-nums;
+.big:active {
+  cursor: grabbing;
 }
 
 .controls {
   display: flex;
+  align-items: center;
   gap: 0.5rem;
+  cursor: default;
+}
+
+.count {
+  margin-right: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--tige-doux);
+  font-variant-numeric: tabular-nums;
 }
 
 .control {
+  min-width: 2.75rem;
   min-height: 2.75rem;
-  padding: 0 1.125rem;
+  padding: 0 1rem;
   border-radius: 999px;
   background: var(--papier);
   box-shadow: inset 0 0 0 1px rgba(36, 56, 44, 0.25);
@@ -114,20 +113,16 @@
   box-shadow: none;
 }
 
-@media (max-width: 1023px) {
-  .grid {
-    columns: 2;
-  }
-}
-
-@media (max-width: 759px) {
-  .caption {
-    font-size: 0.8125rem;
+@media (prefers-reduced-motion: reduce) {
+  .column {
+    will-change: auto;
   }
 
-  .big {
-    height: auto;
-    width: 100%;
-    max-height: 70vh;
+  .thumb .image {
+    transition: none;
+  }
+
+  .open:hover .thumb .image {
+    transform: none;
   }
 }

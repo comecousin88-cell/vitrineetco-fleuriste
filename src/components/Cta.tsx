@@ -22,8 +22,9 @@ export default function Cta({ href, variant = "commande", size = "normal", class
       target={external ? "_blank" : undefined}
       rel={external ? "noopener" : undefined}
       className={`${styles.cta} ${styles[variant]} ${styles[size]} ${className ?? ""}`}
-      whileHover={{ y: -1 }}
-      whileTap={{ scale: 0.97 }}
+      // Le bouton « sobre » (page Deuil) ne bouge pas : seule sa couleur change au survol.
+      whileHover={variant === "sobre" ? undefined : { y: -1 }}
+      whileTap={variant === "sobre" ? undefined : { scale: 0.97 }}
       transition={{ type: "spring", stiffness: 500, damping: 32 }}
     >
       {children}

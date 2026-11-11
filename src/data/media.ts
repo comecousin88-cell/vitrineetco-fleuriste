@@ -1,11 +1,13 @@
 import photos from "./photos.json";
 
-// La séquence du hero, découpée par scripts/prepare_hero.py à partir de source/hero-composition.mp4.
-// Deux séries de fichiers 0001.webp, 0002.webp… : landscape (écrans en largeur) et portrait (téléphones).
+// La séquence du hero, découpée et agrandie (Real-ESRGAN) par scripts/prepare_hero.py, à partir de
+// source/hero-composition.mp4. Trois séries de fichiers 0001.webp, 0002.webp… : hd (1920 px, grands écrans),
+// landscape (1280 px) et portrait (téléphones).
 // Si le nombre d'images change dans le script, le reporter ici. À 0, le site affiche un emplacement provisoire.
 export const HERO_FRAMES = {
   folder: "/hero",
-  count: 80,
+  count: 96,
+  hdFromWidth: 1500, // à partir de cette largeur en pixels réels, la série en 1920 px
   source: "hero-composition.mp4",
 } as const;
 

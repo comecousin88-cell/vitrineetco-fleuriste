@@ -82,8 +82,9 @@ export default function Hero() {
           const video = { frame: 0 };
           const [canvas] = q<HTMLCanvasElement>("[data-h=sequence]");
           if (hasFrames && canvas) {
-            const { count, folder } = HERO_FRAMES;
-            const series = wide ? "landscape" : "portrait";
+            const { count, folder, hdFromWidth } = HERO_FRAMES;
+            // La série en 1920 px seulement si l'écran peut la montrer : elle pèse deux fois plus lourd.
+            const series = !wide ? "portrait" : window.innerWidth * window.devicePixelRatio >= hdFromWidth ? "hd" : "landscape";
             player = createFramePlayer(canvas, `${folder}/${series}`, count);
           }
           const [progress] = q<HTMLElement>("[data-h=progress]");

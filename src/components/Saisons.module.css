@@ -131,6 +131,24 @@
   height: 100%;
 }
 
+/* Le repli, en attendant la vidéo d'éclosion : un détail de la photo de saison. La vue s'approche lentement de ce
+   détail (de 1,9 à 2,3 fois) pendant que le panneau arrive, au même rythme que les fleurs qui s'ouvrent. */
+.detail {
+  position: absolute;
+  inset: 0;
+}
+
+.detail > * {
+  position: absolute;
+  inset: 0;
+}
+
+.detailLayer {
+  transform: scale(calc(1.9 + var(--p, 1) * 0.4));
+  transform-origin: var(--fx) var(--fy);
+  will-change: transform;
+}
+
 .bloomPlaceholder {
   position: absolute;
   inset: 0;

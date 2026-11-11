@@ -96,3 +96,14 @@ p {
   clip-path: inset(50%);
   white-space: nowrap;
 }
+
+/* Le dévoilement « fleur qui s'ouvre » (voir src/lib/useBloomReveal.ts) : avec animation, les photos marquées
+   data-bloom attendent fermées que le script les ouvre à leur arrivée à l'écran. */
+html[data-anim] [data-fade] {
+  opacity: 0;
+}
+
+html[data-anim] [data-bloom],
+html[data-anim] [data-bloom-galerie] {
+  clip-path: circle(0% at 50% 50%);
+}

@@ -13,8 +13,7 @@ import type { Taille } from "@/data/bouquets";
 import type { Mode } from "@/lib/slots";
 
 export type OrderRequest = {
-  bouquet: string; // le slug, "le-coin"
-  taille: Taille;
+  items: { slug: string; taille: Taille; qty: number }[]; // les bouquets du panier, livrés ensemble
   mode: Mode;
   livraison?: {
     quartier: string; // l'identifiant, "paris-12"

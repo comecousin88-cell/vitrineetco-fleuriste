@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import AtelierForm from "@/components/AtelierForm";
 import Photo from "@/components/Photo";
 import { ATELIERS, SESSIONS, THEMES, type Session } from "@/data/ateliers";
@@ -10,6 +10,7 @@ import { placesLabel, shortDate } from "@/lib/ateliers";
 import { formatTime } from "@/lib/hours";
 import { scrollToSection } from "@/lib/lenis";
 import { todayKey } from "@/lib/slots";
+import { useBloomReveal } from "@/lib/useBloomReveal";
 import { useNow } from "@/lib/useNow";
 import styles from "./Ateliers.module.css";
 
@@ -17,6 +18,8 @@ const themeOf = (session: Session) => THEMES.find(({ slug }) => slug === session
 
 export default function Ateliers() {
   const now = useNow();
+  const root = useRef<HTMLDivElement>(null);
+  useBloomReveal(root);
   // Les places restantes vivent ici : une réservation (simulée) les fait baisser à l'écran.
   const [sessions, setSessions] = useState<Session[]>(SESSIONS);
   const [chosen, setChosen] = useState<string>("");
@@ -33,7 +36,7 @@ export default function Ateliers() {
     setSessions((current) => current.map((session) => (session.id === id ? { ...session, restantes: session.restantes - places } : session)));
 
   return (
-    <>
+    <div ref={root}>
       <section className={styles.intro} aria-labelledby="ateliers-title">
         <div className={styles.introText}>
           <h1 id="ateliers-title" className={styles.title}>
@@ -58,6 +61,7 @@ export default function Ateliers() {
             </div>
           </dl>
         </div>
+        <div data-bloom className={styles.bloomFrame}>
         <Photo
           src="/ateliers/ateliers-ouverture.webp"
           file="ateliers-ouverture.jpg"
@@ -66,6 +70,7 @@ export default function Ateliers() {
           className={styles.introPhoto}
           priority
         />
+        </div>
       </section>
 
       <section className={styles.dates} aria-labelledby="dates-title">
@@ -123,6 +128,7 @@ export default function Ateliers() {
         <ul className={styles.themeGrid}>
           {THEMES.map((theme) => (
             <li key={theme.slug} className={styles.themeCard}>
+              <div data-bloom className={styles.bloomFrame}>
               <Photo
                 src={`/ateliers/${theme.photo}.webp`}
                 file={`${theme.photo}.jpg`}
@@ -131,6 +137,7 @@ export default function Ateliers() {
                 sizes="(min-width: 1024px) 25vw, 50vw"
                 className={styles.themePhoto}
               />
+              </div>
               <div className={styles.themeHead}>
                 <h3 className={styles.themeName}>{theme.nom}</h3>
                 <p className={styles.themePrice}>{formatPrice(theme.prix)}</p>
@@ -142,6 +149,6 @@ export default function Ateliers() {
       </section>
 
       <AtelierForm sessions={upcoming} chosen={chosen} onChoose={setChosen} onBooked={onBooked} />
-    </>
+    </div>
   );
 }

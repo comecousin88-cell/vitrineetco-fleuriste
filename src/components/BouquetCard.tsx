@@ -1,27 +1,41 @@
 "use client";
 
-import { forwardRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import Photo from "@/components/Photo";
 import type { Bouquet, Taille } from "@/data/bouquets";
 import { bouquetPhoto } from "@/data/media";
+import { addToCart } from "@/lib/cart";
+import { flyToCart } from "@/lib/fly";
 import { formatPrice } from "@/lib/format";
 import styles from "./BouquetCard.module.css";
 
 type Props = {
   bouquet: Bouquet;
   allowed: Taille[]; // les tailles dans le budget choisi
-  onOrder: (taille: Taille) => void;
 };
 
 const TAILLES: Taille[] = ["S", "M", "L"];
 
 // Une carte : la photo, le nom, les trois prix (qui servent aussi à choisir la taille) et le bouton.
-const BouquetCard = forwardRef<HTMLLIElement, Props>(function BouquetCard({ bouquet, allowed, onOrder }, ref) {
+const BouquetCard = forwardRef<HTMLLIElement, Props>(function BouquetCard({ bouquet, allowed }, ref) {
   const [choice, setChoice] = useState<Taille>("M");
   // Si un budget écarte la taille choisie, on montre la plus proche qui y entre.
   const taille = allowed.includes(choice) ? choice : (allowed.find((t) => TAILLES.indexOf(t) > TAILLES.indexOf(choice)) ?? allowed[allowed.length - 1]);
   const photo = bouquetPhoto(bouquet.slug);
+  const photoRef = useRef<HTMLDivElement>(null);
+  // Un court « Ajouté » sur le bouton, le temps que la miniature arrive au panier.
+  const [added, setAdded] = useState(false);
+  useEffect(() => {
+    if (!added) return;
+    const timer = window.setTimeout(() => setAdded(false), 1600);
+    return () => window.clearTimeout(timer);
+  }, [added]);
+
+  const add = () => {
+    setAdded(true);
+    flyToCart(photoRef.current, () => addToCart(bouquet.slug, taille));
+  };
 
   return (
     <motion.li
@@ -33,14 +47,16 @@ const BouquetCard = forwardRef<HTMLLIElement, Props>(function BouquetCard({ bouq
       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
       className={styles.card}
     >
-      <Photo
+      <div ref={photoRef} className={styles.photoWrap}>
+        <Photo
         src={photo.src}
         file={photo.file}
         alt={`Le bouquet ${bouquet.nom} : ${bouquet.fleurs.toLowerCase()}.`}
         ratio="4 / 5"
         sizes="(min-width: 1024px) 25vw, 50vw"
         className={styles.photo}
-      />
+        />
+      </div>
       <h3 className={styles.name}>{bouquet.nom}</h3>
       <p className={styles.flowers}>{bouquet.fleurs}</p>
 
@@ -68,11 +84,11 @@ const BouquetCard = forwardRef<HTMLLIElement, Props>(function BouquetCard({ bouq
       <motion.button
         type="button"
         className={styles.order}
-        onClick={() => onOrder(taille)}
+        onClick={add}
         whileTap={{ scale: 0.97 }}
-        aria-label={`Commander ${bouquet.nom}, taille ${taille}, ${formatPrice(bouquet.prix[taille])}`}
+        aria-label={`Ajouter au panier : ${bouquet.nom}, taille ${taille}, ${formatPrice(bouquet.prix[taille])}`}
       >
-        Commander en {taille}
+        <span aria-live="polite">{added ? "Ajouté au panier" : `Ajouter en ${taille}`}</span>
       </motion.button>
     </motion.li>
   );

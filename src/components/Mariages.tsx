@@ -8,12 +8,14 @@ import DevisForm from "@/components/DevisForm";
 import Gallery from "@/components/Gallery";
 import Photo from "@/components/Photo";
 import { PRESTATIONS } from "@/data/mariages";
+import { useBloomReveal } from "@/lib/useBloomReveal";
 import styles from "./Mariages.module.css";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Mariages() {
   const root = useRef<HTMLDivElement>(null);
+  useBloomReveal(root);
 
   // La grande photo d'ouverture glisse doucement dans son cadre, comme les univers de l'accueil.
   useGSAP(
@@ -44,7 +46,7 @@ export default function Mariages() {
             boutique.
           </p>
         </div>
-        <div data-opening>
+        <div data-opening data-bloom className={styles.openingWrap}>
           <Photo
             src="/mariages/mariage-ouverture.webp"
             file="mariage-ouverture.jpg"

@@ -165,9 +165,9 @@ export default function DeuilForm({ composition, onCompositionChange }: Props) {
           <motion.div
             key="confirmation"
             className={c.box}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: EASE_OUT }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1.2, ease: EASE_OUT }}
             role="status"
           >
             <p className={c.title}>Merci, c&apos;est noté.</p>
@@ -337,9 +337,9 @@ export default function DeuilForm({ composition, onCompositionChange }: Props) {
                 <span>Total</span>
                 <span>{formatPrice(chosen?.prix ?? 0)}</span>
               </p>
-              <motion.button type="submit" className={`${f.submit} ${styles.submit}`} disabled={sending} whileTap={{ scale: 0.98 }}>
+              <button type="submit" className={`${f.submit} ${styles.submit}`} disabled={sending}>
                 {sending ? "Envoi en cours…" : "Confirmer la commande"}
-              </motion.button>
+              </button>
               <p className={f.concept}>
                 Ou appelez-moi au{" "}
                 <a href={telHref(BOUTIQUE.phone)} className={styles.inlinePhone}>

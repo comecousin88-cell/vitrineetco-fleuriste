@@ -30,3 +30,12 @@ export function scrollToSection(id: string, duration = 1.1) {
   const heading = target.querySelector<HTMLElement>("h2[tabindex]");
   heading?.focus({ preventScroll: true });
 }
+
+// Bloque le défilement de la page (une visionneuse ouverte par-dessus), puis le rend.
+export function lockScroll(locked: boolean) {
+  if (lenis) {
+    if (locked) lenis.stop();
+    else lenis.start();
+  }
+  document.documentElement.style.overflow = locked ? "hidden" : "";
+}
