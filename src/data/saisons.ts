@@ -5,8 +5,15 @@
 
 import eclosions from "./eclosions.json";
 
-const ready: Record<string, number> = eclosions;
-const eclosion = (fleur: string) => ({ fleur, folder: `/eclosion/${fleur}`, count: ready[fleur] ?? 0, file: `eclosion-${fleur}.mp4` });
+// Pour chaque fleur prête : le nombre d'images. Le script a déjà teinté le mur de la vidéo vers la couleur de la
+// saison : il suffit d'estomper ses bords pour que la fleur se fonde dans la page.
+const ready: Record<string, { count: number; fond: string; mur?: string }> = eclosions;
+const eclosion = (fleur: string) => ({
+  fleur,
+  folder: `/eclosion/${fleur}`,
+  count: ready[fleur]?.count ?? 0,
+  file: `eclosion-${fleur}.mp4`,
+});
 
 export type Saison = {
   slug: "printemps" | "ete" | "automne" | "hiver";

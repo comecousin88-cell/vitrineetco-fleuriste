@@ -13,8 +13,8 @@ type Props = {
   children: ReactNode;
 };
 
-// Les boutons du site. Terracotta pour commander, et seulement pour ça ; clair pour tout le reste.
-// Sur la page Deuil, la commande passe en vert tige (« sobre ») : le terracotta y serait trop vif.
+// Les boutons du site. Vert sauge foncé pour commander ; clair pour tout le reste.
+// Sur la page Deuil, la commande passe en vert tige (« sobre ») : plus calme encore.
 export default function Cta({ href, variant = "commande", size = "normal", className, external, children }: Props) {
   return (
     <motion.a

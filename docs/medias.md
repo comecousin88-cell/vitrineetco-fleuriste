@@ -190,23 +190,23 @@ Le site fonctionne sans eux, mais ils le rendent plus vivant et plus crédible.
 
 ---
 
-## État au 11 novembre 2026
+## État au 11 novembre 2026 (soir)
 
 Préparation : `python scripts/prepare_images.py` (photos),
 `python scripts/prepare_hero.py --esrgan chemin/realesrgan-ncnn-vulkan.exe` (séquence du hero, agrandie en 1920 px)
-et `python scripts/prepare_eclosions.py` (fleurs qui s'ouvrent, dans les saisons).
+et `python scripts/prepare_eclosions.py --esrgan chemin/realesrgan-ncnn-vulkan.exe` (fleurs qui s'ouvrent, agrandies
+en 1080 px avec le modèle vidéo de Real-ESRGAN ; `--reuse` reprend les images déjà agrandies).
 Les deux scripts relisent `source/` à chaque lancement : déposer un fichier sous son nom et relancer suffit.
 
 **Intégrés** : la séquence du hero (`hero-composition.mp4` puis `hero-ruban.mp4`, 96 images par série) ; l'affiche
 `hero-fin.jpg` (image 237 de `hero-ruban.mp4`, la dernière nette, agrandie en 2560×1440) ; les 8 bouquets, les 4
 univers, les 4 saisons, les 6 photos Deuil, 7 photos Mariages, 4 photos Ateliers, le portrait, l'intérieur et la
 façade de la boutique, les 2 photos d'abonnement et les 3 producteurs ; la nouvelle version de `bouquet-le-coin.jpg`
-(raccord avec le hero) ; les éclosions de la tulipe et de la pivoine (60 images chacune, du bouton fermé à la fleur
-ouverte, à progression régulière).
+(raccord avec le hero) ; les quatre éclosions (tulipe, pivoine, dahlia,
+amaryllis : 60 images chacune, du bouton fermé à la fleur ouverte, à progression régulière, fond teinté vers la
+couleur de la saison ; la fin du dahlia est coupée avant des coulures claires sous la fleur).
 
-**Encore attendus** : `eclosion-dahlia.mp4` et `eclosion-amaryllis.mp4`. En attendant, l'automne et l'hiver
-montrent un zoom lent sur un détail de leur photo de saison ; le script des éclosions les remplacera de lui-même.
-Secondaires : `atelier-sec` (emplacement sur la page Ateliers) et les 3 photos de galerie, qui
+**Encore attendus** : rien d'indispensable. Secondaires : `atelier-sec` (emplacement sur la page Ateliers) et les 3 photos de galerie, qui
 n'apparaissent qu'une fois fournies.
 
 **Non utilisés** : `hero-debut.jpeg`, `hero-fin-ancien.jpg` (ancien bouquet), `hero-composition-fin.jpg` et

@@ -23,12 +23,12 @@
 }
 
 .commande {
-  background: var(--terracotta);
+  background: var(--action);
   color: var(--papier);
 }
 
 .commande:hover {
-  background: var(--terracotta-fonce);
+  background: var(--action-fonce);
 }
 
 .clair {

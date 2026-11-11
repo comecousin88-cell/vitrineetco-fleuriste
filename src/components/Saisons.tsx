@@ -167,24 +167,24 @@ export default function Saisons() {
                   <p className={styles.flowers}>{saison.fleurs}</p>
                   <p className={styles.phrase}>{saison.phrase}</p>
                 </div>
-                <div className={styles.media}>
-                  <Photo src={photo.src} file={photo.file} alt={saison.alt} sizes="(min-width: 760px) 40vw, 70vw" className={styles.photo} />
-                  <div className={styles.bloom} data-s="bloom">
-                    {saison.eclosion.count > 0 ? (
-                      <canvas className={styles.canvas} role="img" aria-label={`Une ${saison.eclosion.fleur} qui s'ouvre.`} />
-                    ) : isReady(photo.src) ? (
-                      // Le repli : un détail de la photo de saison, sur lequel on s'approche lentement.
-                      <div className={styles.detail} style={{ ["--fx" as string]: saison.detail.x, ["--fy" as string]: saison.detail.y }}>
-                        <Photo src={photo.src} file={photo.file} alt="" sizes="(min-width: 760px) 20vw, 40vw" layerClassName={styles.detailLayer} />
-                      </div>
-                    ) : (
-                      <div className={styles.bloomPlaceholder} aria-hidden="true">
-                        <span>{saison.eclosion.file}</span>
-                        <span className={styles.bloomBar} />
-                      </div>
-                    )}
-                  </div>
+                {/* La fleur, en grand : elle s'ouvre au rythme du défilement et se fond dans la couleur de la saison. */}
+                <div className={styles.bloom} data-s="bloom">
+                  {saison.eclosion.count > 0 ? (
+                    <canvas className={styles.canvas} role="img" aria-label={`Une ${saison.eclosion.fleur} qui s'ouvre.`} />
+                  ) : isReady(photo.src) ? (
+                    // Le repli, si la vidéo manque : un détail de la photo de saison, sur lequel on s'approche lentement.
+                    <div className={styles.detail} style={{ ["--fx" as string]: saison.detail.x, ["--fy" as string]: saison.detail.y }}>
+                      <Photo src={photo.src} file={photo.file} alt="" sizes="(min-width: 760px) 45vw, 90vw" layerClassName={styles.detailLayer} />
+                    </div>
+                  ) : (
+                    <div className={styles.bloomPlaceholder} aria-hidden="true">
+                      <span>{saison.eclosion.file}</span>
+                      <span className={styles.bloomBar} />
+                    </div>
+                  )}
                 </div>
+                {/* La boutique à cette saison : une petite photo, sur grand écran seulement. */}
+                <Photo src={photo.src} file={photo.file} alt={saison.alt} ratio="4 / 5" sizes="20vw" className={styles.photo} />
               </article>
             );
           })}

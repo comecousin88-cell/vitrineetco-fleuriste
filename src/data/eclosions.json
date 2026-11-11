@@ -1,4 +1,22 @@
 {
-  "tulipe": 60,
-  "pivoine": 60
+  "tulipe": {
+    "count": 60,
+    "fond": "#eaf0e2",
+    "mur": "#dad5cd"
+  },
+  "pivoine": {
+    "count": 60,
+    "fond": "#f6e5de",
+    "mur": "#dad5cc"
+  },
+  "dahlia": {
+    "count": 60,
+    "fond": "#f2e4d3",
+    "mur": "#d9d5cb"
+  },
+  "amaryllis": {
+    "count": 60,
+    "fond": "#e5e9e6",
+    "mur": "#d8d4cb"
+  }
 }

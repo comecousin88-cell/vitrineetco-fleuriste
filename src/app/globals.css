@@ -8,8 +8,9 @@
   --sauge: #9bae95;
   --sauge-pale: #dfe6da;
   --rose: #edcfc8;
-  --terracotta: #ad5834; /* un seul usage : les boutons qui commandent */
-  --terracotta-fonce: #93472a;
+  --action: #4f6b57; /* le vert sauge foncé des boutons qui commandent : texte clair à 5,6:1 */
+  --action-fonce: #3f5747; /* le même, au survol */
+  --erreur: #a3392c; /* les messages à corriger, et eux seuls */
   --filet: rgba(36, 56, 44, 0.14);
 
   --font-size: 1.0625rem; /* 17 px */
@@ -99,11 +100,11 @@ p {
 
 /* Le dévoilement « fleur qui s'ouvre » (voir src/lib/useBloomReveal.ts) : avec animation, les photos marquées
    data-bloom attendent fermées que le script les ouvre à leur arrivée à l'écran. */
-html[data-anim] [data-fade] {
+html[data-anim] [data-fade]:not([data-revealed]) {
   opacity: 0;
 }
 
-html[data-anim] [data-bloom],
-html[data-anim] [data-bloom-galerie] {
+html[data-anim] [data-bloom]:not([data-revealed]),
+html[data-anim] [data-bloom-galerie]:not([data-revealed]) {
   clip-path: circle(0% at 50% 50%);
 }

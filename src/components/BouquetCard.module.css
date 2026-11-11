@@ -120,7 +120,7 @@
   margin-top: 0.625rem;
   min-height: 2.75rem;
   border-radius: 999px;
-  background: var(--terracotta);
+  background: var(--action);
   color: var(--papier);
   font-size: 0.9375rem;
   font-weight: 600;
@@ -128,7 +128,7 @@
 }
 
 .order:hover {
-  background: var(--terracotta-fonce);
+  background: var(--action-fonce);
 }
 
 @media (max-width: 759px) {

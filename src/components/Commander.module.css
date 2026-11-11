@@ -127,7 +127,7 @@
 }
 
 .input[aria-invalid="true"] {
-  box-shadow: inset 0 0 0 2px var(--terracotta);
+  box-shadow: inset 0 0 0 2px var(--erreur);
 }
 
 select.input {
@@ -159,7 +159,7 @@ select.input {
   display: block;
   margin-top: 0.125rem;
   font-size: 0.8125rem;
-  color: var(--terracotta-fonce);
+  color: var(--erreur);
 }
 
 .hint {
@@ -290,7 +290,7 @@ select.input {
 }
 
 .quartiers:focus {
-  outline: 2px solid var(--terracotta);
+  outline: 2px solid var(--erreur);
   outline-offset: 2px;
 }
 
@@ -499,7 +499,7 @@ select.input {
   width: 100%;
   min-height: 3.25rem;
   border-radius: 999px;
-  background: var(--terracotta);
+  background: var(--action);
   color: var(--papier);
   font-weight: 600;
   font-size: 1rem;
@@ -507,7 +507,7 @@ select.input {
 }
 
 .submit:hover {
-  background: var(--terracotta-fonce);
+  background: var(--action-fonce);
 }
 
 .submit:disabled {

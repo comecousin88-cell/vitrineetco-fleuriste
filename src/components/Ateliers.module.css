@@ -135,7 +135,7 @@
 .reserve {
   min-height: 2.75rem;
   border-radius: 999px;
-  background: var(--terracotta);
+  background: var(--action);
   color: var(--papier);
   font-weight: 600;
   font-size: 0.9375rem;
@@ -143,7 +143,7 @@
 }
 
 .reserve:hover:not(:disabled) {
-  background: var(--terracotta-fonce);
+  background: var(--action-fonce);
 }
 
 .reserve:disabled {

@@ -20,7 +20,7 @@
 }
 
 .closed {
-  background: var(--rose);
+  background: #e6e6de;
 }
 
 .dot {
@@ -35,7 +35,7 @@
 }
 
 .closed .dot {
-  background: var(--terracotta);
+  background: #8b9086;
 }
 
 .label {
