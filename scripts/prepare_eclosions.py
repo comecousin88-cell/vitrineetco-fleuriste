@@ -181,16 +181,17 @@ def to_hex(bgr: np.ndarray) -> str:
 
 
 def retint(frames: list[np.ndarray], wall: np.ndarray, target_hex: str) -> list[np.ndarray]:
-    """Amène le mur à la couleur de la saison. Chaque pixel est décalé d'autant qu'il ressemble au mur : le fond
-    entier, les ombres douces du fond un peu moins, la fleur et sa tige pas du tout."""
+    """Amène le mur à la couleur exacte de la saison. Chaque pixel prend cette couleur d'autant qu'il ressemble au
+    mur : le fond entier la prend tout à fait (même là où la vidéo est un peu plus claire ou plus sombre), les ombres
+    douces du fond en partie, la fleur et sa tige pas du tout."""
     r, g, b = (int(target_hex[i : i + 2], 16) for i in (1, 3, 5))
-    shift = np.array([b, g, r], dtype=np.float32) - wall
+    target = np.array([b, g, r], dtype=np.float32)
     result = []
     for frame in frames:
         pixels = frame.astype(np.float32)
         distance = np.linalg.norm(pixels - wall, axis=2)
         weight = np.clip((KEY_FAR - distance) / (KEY_FAR - KEY_NEAR), 0, 1)[..., None]
-        result.append(np.clip(pixels + shift * weight, 0, 255).astype(np.uint8))
+        result.append(np.clip(pixels * (1 - weight) + target * weight, 0, 255).astype(np.uint8))
     return result
 
 
